@@ -24,6 +24,9 @@ en alternance à Saint-Malo Agglomération. Il sert de support à l'**épreuve E
 - Réalisations professionnelles, en formation et en alternance, chacune avec sa fiche :
   contexte, objectifs, environnement technique, mise en œuvre, résultats, compétences, documents
 - Tableau de synthèse généré automatiquement (cohérent avec les réalisations)
+- Épreuve E6 (administration des systèmes et des réseaux) : les 17 compétences du bloc 2 SISR,
+  un tableau de couverture, les deux réalisations retenues (`epreuveE6.realisations` dans `content.js`),
+  l'environnement technologique et les documents de l'épreuve
 - Veille technologique
 - Liens vers les documents de l'épreuve (tableau de synthèse, attestation, CV)
 

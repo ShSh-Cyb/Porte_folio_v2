@@ -508,3 +508,24 @@ a:hover { text-decoration: underline; }
 .dys-btn { font: 700 14px var(--font); width: auto; min-width: 38px; padding: 0 8px; }
 .dys-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .lang-btn { font: 700 13px var(--font); width: auto; min-width: 38px; padding: 0 8px; }
+
+/* ---------- Épreuve E6 ---------- */
+.sub-title--first { margin-top: 0; }
+.synthese-wrap { margin-bottom: 8px; }
+.e6-lead { margin-top: -20px; margin-bottom: 28px; }
+.synthese--e6 { min-width: 760px; }
+.synthese--e6 thead th:nth-child(n + 2) { text-align: center; font-size: 12px; }
+.synthese--e6 td:nth-child(n + 2) { text-align: center; }
+.synthese--e6 tbody th .num { display: inline-block; min-width: 22px; color: var(--accent); font: 600 12px var(--mono); }
+.synthese--e6 tbody th { font-weight: 400; font-size: 13px; }
+.synthese--e6 tfoot td, .synthese--e6 tfoot th { font: 600 12px var(--mono); color: var(--muted); background: var(--surface-2); }
+.e6-selection { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.e6-pick { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.e6-pick h4 { margin: 6px 0 8px; font-size: 17px; }
+.e6-pick .comps { margin: 10px 0 0; }
+.e6-empty { color: var(--muted); background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); padding: 18px 20px; margin: 0; }
+.e6-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 28px; }
+.e6-grid h4 { margin: 0 0 12px; font-size: 15px; }
+.comp-list--e6 li { font-size: 13px; line-height: 1.4; color: var(--muted); padding: 6px 0; border-bottom: 1px solid var(--border); }
+.comp-list--e6 li:last-child { border-bottom: 0; }
+.comp-list--e6 .mono { color: var(--accent); font-weight: 600; margin-right: 6px; }

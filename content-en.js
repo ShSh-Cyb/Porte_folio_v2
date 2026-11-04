@@ -101,6 +101,58 @@ window.PORTFOLIO_EN = {
     },
   ],
 
+  referentielE6: [
+    {
+      nom: "Design a network infrastructure solution",
+      details: [
+        "Analyse an expressed need and its legal context",
+        "Study the impact of a change to an infrastructure component on the IT system",
+        "Build a solution selection file and write the technical specifications",
+        "Choose the components needed to ensure service quality and availability",
+        "Mock up and prototype an infrastructure solution that meets the expected quality of service",
+        "Define and prepare the tests needed to validate the chosen solution",
+      ],
+    },
+    {
+      nom: "Install, test and deploy a network infrastructure solution",
+      details: [
+        "Install and configure infrastructure components",
+        "Install and configure components needed for service continuity",
+        "Install and configure components needed for quality of service",
+        "Write or update the technical and user documentation of an infrastructure solution",
+        "Test the integration and acceptance of an infrastructure solution",
+        "Deploy an infrastructure solution",
+      ],
+    },
+    {
+      nom: "Operate, troubleshoot and monitor a network infrastructure solution",
+      details: [
+        "Administer infrastructure components on site and remotely",
+        "Automate administration tasks",
+        "Manage indicators and activity logs of infrastructure components",
+        "Identify, qualify, assess and respond to an incident or problem",
+        "Assess, maintain and improve the quality of a service",
+      ],
+    },
+  ],
+
+  epreuveE6: {
+    environnement: [
+      "[Hypervisor — e.g. Proxmox, VMware Workstation, VirtualBox]",
+      "Windows Server / Active Directory",
+      "Linux (Debian / Ubuntu)",
+      "Cisco Packet Tracer",
+      "[Firewall — e.g. pfSense]",
+      "[Monitoring — e.g. Zabbix, Nagios]",
+    ],
+    documents: [
+      { label: "Project description sheet — project 1" },
+      { label: "Project description sheet — project 2" },
+      { label: "Professional file cover page" },
+      { label: "Technology environment (appendix II.E)" },
+    ],
+  },
+
   projets: [
     {
       id: "glpi",
@@ -215,6 +267,7 @@ window.PORTFOLIO_EN = {
     },
     {
       id: "deploiement-ventoy",
+      court: "Deployment",
       titre: "Automating Windows 11 workstation deployment (PowerShell, Ventoy USB key)",
       periode: "29/06/26 to 31/07/26",
       description: "Designed a post-installation PowerShell script embedded on the Ventoy USB key: software and agent installation, app clean-up, “site” and “head office” profiles.",
@@ -260,6 +313,7 @@ window.PORTFOLIO_EN = {
     },
     {
       id: "diagnostic-certificat",
+      court: "Certificate",
       titre: "Troubleshooting a certificate incident blocking several services",
       periode: "29/06/26 to 31/07/26",
       description: "Handled a ticket: certificate errors on Jira and the time-tracking tool, and the Endpoint Central agent no longer reporting from a remote site's workstations.",
@@ -282,6 +336,7 @@ window.PORTFOLIO_EN = {
     },
     {
       id: "recuperation-acces",
+      court: "Access recovery",
       titre: "Procedure to recover access to a locked workstation",
       periode: "29/06/26 to 31/07/26",
       description: "Researched, tested and documented a method to reset the local administrator password of a Windows workstation, for the IT team.",
@@ -324,6 +379,7 @@ window.PORTFOLIO_EN = {
     },
     {
       id: "saint-malo-agglo",
+      court: "Work-study",
       titre: "[Work-study project — title to be completed]",
       periode: "[DD/MM/YY to DD/MM/YY]",
       description: "[Context at Saint-Malo Agglomération, what you did, the result for users.]",

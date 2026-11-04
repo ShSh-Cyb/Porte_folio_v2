@@ -80,6 +80,15 @@
     )
     .join("");
 
+  // Compétences E6 (bloc 2 SISR), numérotées de 1 à 17
+  let nE6 = 0;
+  const subsE6 = (D.referentielE6 || []).flatMap((c) => c.details.map((d) => ({ num: ++nE6, txt: d })));
+  const compsE6 = (pr.competencesE6 || [])
+    .map((k) => subsE6.find((x) => x.num === k))
+    .filter(Boolean)
+    .map((x) => `<li><span class="mono">${x.num}</span> ${esc(x.txt)}</li>`)
+    .join("");
+
   const prev = list[(idx - 1 + list.length) % list.length];
   const next = list[(idx + 1) % list.length];
   const rs = D.rapportStage;
@@ -114,6 +123,7 @@
           <h2>Compétences mobilisées</h2>
           ${comps ? `<ul class="comp-list">${comps}</ul>` : `<p class="muted">À renseigner.</p>`}
         </div>
+        ${compsE6 ? `<div class="side-card"><h2>${esc(T("Compétences E6 (bloc 2 SISR)", "E6 skills (SISR block 2)"))}</h2><ul class="comp-list comp-list--e6">${compsE6}</ul></div>` : ""}
         ${links ? `<div class="side-card side-card--links">${links}</div>` : ""}
       </aside>
     </div>

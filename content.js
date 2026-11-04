@@ -147,6 +147,68 @@ window.PORTFOLIO = {
   ],
 
   /*
+   * ÉPREUVE E6 — Administration des systèmes et des réseaux (option SISR)
+   * Les 3 compétences du bloc 2 et leurs 17 sous-compétences, numérotées
+   * de 1 à 17 comme sur la fiche descriptive de réalisation professionnelle.
+   * Les réalisations y font référence avec « competencesE6 ».
+   */
+  referentielE6: [
+    {
+      nom: "Concevoir une solution d'infrastructure réseau",
+      details: [
+        "Analyser un besoin exprimé et son contexte juridique",
+        "Étudier l'impact d'une évolution d'un élément d'infrastructure sur le système informatique",
+        "Élaborer un dossier de choix d'une solution d'infrastructure et rédiger les spécifications techniques",
+        "Choisir les éléments nécessaires pour assurer la qualité et la disponibilité d'un service",
+        "Maquetter et prototyper une solution d'infrastructure permettant d'atteindre la qualité de service attendue",
+        "Déterminer et préparer les tests nécessaires à la validation de la solution d'infrastructure retenue",
+      ],
+    },
+    {
+      nom: "Installer, tester et déployer une solution d'infrastructure réseau",
+      details: [
+        "Installer et configurer des éléments d'infrastructure",
+        "Installer et configurer des éléments nécessaires pour assurer la continuité des services",
+        "Installer et configurer des éléments nécessaires pour assurer la qualité de service",
+        "Rédiger ou mettre à jour la documentation technique et utilisateur d'une solution d'infrastructure",
+        "Tester l'intégration et l'acceptation d'une solution d'infrastructure",
+        "Déployer une solution d'infrastructure",
+      ],
+    },
+    {
+      nom: "Exploiter, dépanner et superviser une solution d'infrastructure réseau",
+      details: [
+        "Administrer sur site et à distance des éléments d'une infrastructure",
+        "Automatiser des tâches d'administration",
+        "Gérer des indicateurs et des fichiers d'activité des éléments d'une infrastructure",
+        "Identifier, qualifier, évaluer et réagir face à un incident ou à un problème",
+        "Évaluer, maintenir et améliorer la qualité d'un service",
+      ],
+    },
+  ],
+
+  epreuveE6: {
+    // Les deux réalisations présentées à l'épreuve (leurs « id »), ex. ["lan-vlan", "deploiement-ventoy"]
+    realisations: [],
+    // Environnement technologique utilisé (annexe II.E du référentiel)
+    environnement: [
+      "[Hyperviseur — ex. Proxmox, VMware Workstation, VirtualBox]",
+      "Windows Server / Active Directory",
+      "Linux (Debian / Ubuntu)",
+      "Cisco Packet Tracer",
+      "[Pare-feu — ex. pfSense]",
+      "[Supervision — ex. Zabbix, Nagios]",
+    ],
+    // Documents de l'épreuve (affichés seulement s'ils ont une url)
+    documents: [
+      { label: "Fiche descriptive — réalisation 1", url: "" },
+      { label: "Fiche descriptive — réalisation 2", url: "" },
+      { label: "Page de garde du dossier professionnel", url: "" },
+      { label: "Environnement technologique (annexe II.E)", url: "" },
+    ],
+  },
+
+  /*
    * RÉALISATIONS PROFESSIONNELLES (épreuve E5)
    * Chaque réalisation a sa propre fiche détaillée : realisation.html?id=<id>
    *
@@ -154,7 +216,9 @@ window.PORTFOLIO = {
    *  contexte   : "formation", "pro-1" (milieu professionnel 1re année — stage Hoppen)
    *               ou "pro-2" (milieu professionnel 2e année — alternance Saint-Malo Agglomération)
    *  periode    : format du tableau E5 « JJ/MM/AA au JJ/MM/AA »
-   *  competences: numéros du référentiel (1 à 6) mobilisés
+   *  competences: numéros du référentiel E5 (1 à 6) mobilisés
+   *  competencesE6: numéros du bloc 2 SISR (1 à 17) mobilisés — épreuve E6
+   *  court      : nom court, utilisé dans le tableau de l'épreuve E6
    *  fiche      : le contenu détaillé affiché sur la fiche
    *  documents  : tes artefacts. Dépose-les dans docs/<id>/ puis liste-les :
    *               { label: "Procédure d'installation", url: "docs/glpi/procedure.pdf" }
@@ -171,6 +235,8 @@ window.PORTFOLIO = {
         "Installation et configuration de GLPI pour centraliser l'inventaire du parc et le suivi des demandes d'assistance des utilisateurs.",
       tags: ["GLPI", "Linux", "Helpdesk"],
       competences: [1, 2, 5],
+      competencesE6: [7, 10, 13, 15],
+      court: "GLPI",
       fiche: {
         contexte: "[Contexte : pour quelle organisation (réelle ou fictive) et quel besoin ?]",
         objectifs: ["Centraliser les demandes d'assistance", "Inventorier le parc informatique", "[Autre objectif]"],
@@ -193,6 +259,8 @@ window.PORTFOLIO = {
         "Maquette sous Cisco Packet Tracer : plan d'adressage IP, création de VLAN, routage inter-VLAN, puis vérification des flux avec Wireshark.",
       tags: ["Cisco", "VLAN", "Routage", "Wireshark"],
       competences: [1, 5],
+      competencesE6: [5, 6, 7, 11],
+      court: "VLAN",
       fiche: {
         contexte: "[Contexte et besoin de segmentation.]",
         objectifs: ["Segmenter le réseau par service", "Mettre en place le routage inter-VLAN", "[Autre objectif]"],
@@ -215,6 +283,8 @@ window.PORTFOLIO = {
         "Création d'un domaine Active Directory, gestion des utilisateurs, des groupes et des droits d'accès, mise à disposition de services réseau.",
       tags: ["Windows Server", "Active Directory"],
       competences: [1, 5],
+      competencesE6: [7, 10, 12, 13],
+      court: "Active Directory",
       fiche: {
         contexte: "[Contexte.]",
         objectifs: ["Centraliser la gestion des comptes", "Gérer les droits d'accès par groupes", "[Autre objectif]"],
@@ -237,6 +307,8 @@ window.PORTFOLIO = {
         "En binôme avec Lara Bernstein : migration d'un site WordPress développé en local sous WAMP vers un hébergement en ligne chez PlanetHoster (base de données, fichiers, configuration et URL).",
       tags: ["WordPress", "WAMP", "PlanetHoster", "MySQL"],
       competences: [3, 5],
+      competencesE6: [7, 12],
+      court: "WordPress",
       fiche: {
         contexte:
           "Projet de formation réalisé en binôme avec Lara Bernstein. Un site WordPress développé en local sous WAMP devait être mis en ligne chez l'hébergeur PlanetHoster, sans perte de contenu ni de configuration.",
@@ -280,6 +352,8 @@ window.PORTFOLIO = {
         "Conception de ce portfolio en HTML, CSS et JavaScript, publié sur GitHub Pages, pour présenter mon parcours, mes réalisations et ma veille.",
       tags: ["HTML", "CSS", "JavaScript", "GitHub"],
       competences: [3, 6],
+      competencesE6: [],
+      court: "Portfolio",
       fiche: {
         contexte: "Le portfolio est un attendu de l'épreuve E5 du BTS SIO : il retrace mon parcours de professionnalisation et donne accès à mes réalisations.",
         objectifs: ["Présenter mon parcours et mes réalisations", "Gérer mon identité professionnelle en ligne", "Rendre mes documents accessibles au jury"],
@@ -302,6 +376,8 @@ window.PORTFOLIO = {
         "Rédaction d'une procédure interne de migration et suivi poste par poste via une checklist Jira en onze étapes, en amont de la fin du support de Windows 10.",
       tags: ["Windows 11", "BitLocker", "Winget", "Jira"],
       competences: [1, 4, 5],
+      competencesE6: [2, 6, 10, 11, 12, 13],
+      court: "Windows 11",
       fiche: {
         contexte:
           "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. La fin du support de Windows 10 imposait de migrer les postes de travail. Pour que l'opération soit identique sur tout le parc, il fallait une procédure standardisée et un suivi précis de l'avancement.",
@@ -344,6 +420,8 @@ window.PORTFOLIO = {
         "Conception d'un script PowerShell de post-installation embarqué sur la clé Ventoy : installation des logiciels et agents, nettoyage des applications, profils « site » et « siège ».",
       tags: ["PowerShell", "Ventoy", "Winget", "Automatisation"],
       competences: [1, 5],
+      competencesE6: [7, 10, 12, 13, 14, 16],
+      court: "Déploiement",
       fiche: {
         contexte:
           "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. L'installation des nouveaux postes demandait de nombreuses opérations manuelles après Windows. L'objectif était de les automatiser de façon fiable et reproductible.",
@@ -379,6 +457,8 @@ window.PORTFOLIO = {
         "Participation au déploiement d'une surcouche de mot de passe sur les certificats OpenVPN, pour mettre fin au partage de sessions VPN restées ouvertes.",
       tags: ["OpenVPN", "Certificats", "Sécurité"],
       competences: [1, 5],
+      competencesE6: [1, 7, 10, 11, 12],
+      court: "OpenVPN",
       fiche: {
         contexte:
           "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. Le mot de passe réseau, complexe, était souvent enregistré dans OpenVPN GUI : des sessions restaient ouvertes et plusieurs personnes finissaient par partager un même accès. La solution retenue : un mot de passe propre au certificat, que l'application ne peut pas mémoriser.",
@@ -413,6 +493,8 @@ window.PORTFOLIO = {
         "Traitement d'un ticket : erreurs de certificat sur Jira et l'outil de gestion des temps, et perte de remontée de l'agent Endpoint Central sur les postes d'un site distant.",
       tags: ["Diagnostic", "Certificats", "Jira", "Support"],
       competences: [2],
+      competencesE6: [13, 16, 17],
+      court: "Certificat",
       fiche: {
         contexte:
           "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. Des utilisateurs d'un site distant ne pouvaient plus accéder à Jira ni à l'outil de gestion des temps : les navigateurs signalaient un certificat non valide.",
@@ -446,6 +528,8 @@ window.PORTFOLIO = {
         "Recherche, test et documentation d'une méthode pour réinitialiser le mot de passe administrateur local d'un poste Windows, à l'usage de l'équipe DSI.",
       tags: ["Windows", "WinPE", "Documentation"],
       competences: [1, 2],
+      competencesE6: [8, 10, 16],
+      court: "Récupération",
       fiche: {
         contexte:
           "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. Défi proposé par le responsable IT : trouver et documenter une méthode pour retrouver l'accès à un poste dont le mot de passe administrateur local avait été perdu.",
@@ -478,6 +562,8 @@ window.PORTFOLIO = {
         "Prise en main à distance, mise en conformité et enrôlement des postes, suivi des tickets Jira, inventaire GLPI et reconditionnement des postes anciens sous ChromeOS Flex.",
       tags: ["TeamViewer", "Endpoint Central", "GLPI", "ChromeOS Flex"],
       competences: [1, 2],
+      competencesE6: [13, 15, 16],
+      court: "Support",
       fiche: {
         contexte:
           "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. Au quotidien, la DSI assure le support des utilisateurs internes et la gestion du parc informatique.",
@@ -512,6 +598,8 @@ window.PORTFOLIO = {
       description: "[Contexte à Saint-Malo Agglomération, ce que tu as fait, le résultat pour les utilisateurs.]",
       tags: ["[Techno]"],
       competences: [],
+      competencesE6: [],
+      court: "Alternance",
       fiche: {
         contexte: "Alternance d'administrateur systèmes et réseaux à Saint-Malo Agglomération (EPCI). [Le service, le besoin exprimé, les contraintes.]",
         objectifs: ["[Objectif]"],
