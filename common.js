@@ -12,6 +12,23 @@
     try { localStorage.setItem("theme", next); } catch (e) {}
   });
 
+  /* ---------- Police adaptée à la dyslexie (bouton « Aa ») ---------- */
+  const dysBtn = $("#dysBtn");
+  if (dysBtn) {
+    const sync = () => {
+      const on = root.dataset.dys === "1";
+      dysBtn.setAttribute("aria-pressed", on);
+      dysBtn.setAttribute("aria-label", on ? "Désactiver la police OpenDyslexic" : "Activer la police OpenDyslexic, adaptée à la dyslexie");
+    };
+    dysBtn.addEventListener("click", () => {
+      if (root.dataset.dys === "1") delete root.dataset.dys;
+      else root.dataset.dys = "1";
+      try { localStorage.setItem("dys", root.dataset.dys === "1" ? "1" : "0"); } catch (e) {}
+      sync();
+    });
+    sync();
+  }
+
   /* ---------- Menu mobile ---------- */
   const toggle = $("#navToggle");
   const links = $("#navLinks");

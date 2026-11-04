@@ -6,6 +6,21 @@
  *  Pour retirer une section optionnelle, vide sa liste : [].
  */
 window.PORTFOLIO = {
+  /*
+   * APPARENCE
+   *  palette : "bleu" (réseau), "ambre" (régie), "violet", "rouge" (éditorial)
+   *  fond    : fond de l'accueil — "grille", "degrade", "reseau", "ondes", "particules" ou "aucun"
+   *  avatar  : "illustration", "pochoir", "crayon" (dessins tirés de ta photo) ou "photo"
+   *  police  : "inter", "atkinson" (Atkinson Hyperlegible), "lexend" ou "opendyslexic"
+   *            (les visiteurs peuvent aussi activer OpenDyslexic avec le bouton « Aa »)
+   */
+  apparence: {
+    palette: "bleu",
+    fond: "grille",
+    avatar: "illustration",
+    police: "inter",
+  },
+
   profil: {
     prenom: "Shoghi",
     nom: "Sheida",

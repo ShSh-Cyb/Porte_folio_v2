@@ -28,8 +28,10 @@
   if (p.cv) Object.assign($("#heroCv"), { href: p.cv, hidden: false });
 
   const avatar = $("#avatar");
-  if (p.photo) {
-    avatar.innerHTML = `<img src="${esc(p.photo)}" alt="Photo de ${esc(nomComplet)}" />`;
+  const avStyle = document.documentElement.dataset.avatar;
+  const avSrc = ["illustration", "pochoir", "crayon"].includes(avStyle) ? `assets/avatar-${avStyle}.png` : p.photo;
+  if (avSrc) {
+    avatar.innerHTML = `<img src="${esc(avSrc)}" alt="${avSrc === p.photo ? "Photo" : "Portrait dessiné"} de ${esc(nomComplet)}" />`;
   } else {
     const ini = (p.prenom.replace(/\W/g, "")[0] || "") + (p.nom.replace(/\W/g, "")[0] || "");
     avatar.textContent = ini.toUpperCase() || "</>";
@@ -273,7 +275,127 @@
     $("#heroHint").hidden = true;
     if (reduceMotion) heroVideo.removeAttribute("autoplay"), heroVideo.pause();
   } else {
-    initParticles($("#heroCanvas"));
+    const fond = document.documentElement.dataset.fond;
+    const cv = $("#heroCanvas");
+    if (fond !== "particules") $("#heroHint").hidden = true;
+    if (fond === "particules") initParticles(cv);
+    else if (fond === "reseau") runCanvas(cv, networkScene());
+    else if (fond === "ondes") runCanvas(cv, wavesScene());
+    else cv.hidden = true; // grille, degrade, aucun : fonds en CSS
+  }
+
+  /* Boucle d'animation commune : taille, pause hors écran, couleur du thème */
+  function runCanvas(canvas, scene) {
+    const ctx = canvas.getContext("2d");
+    let w = 0, h = 0, color = "#60a5fa", running = false, onScreen = true, last = 0, t = 0;
+    const readColor = () => (color = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || color);
+    const draw = (dt) => scene.frame(ctx, w, h, dt, t, color);
+    function resize() {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      scene.setup(w, h);
+      draw(0);
+    }
+    function loop(ts) {
+      if (!running) return;
+      const dt = last ? Math.min(50, ts - last) : 16;
+      last = ts; t += dt;
+      draw(dt);
+      requestAnimationFrame(loop);
+    }
+    const setRunning = () => {
+      const should = !reduceMotion && onScreen && !document.hidden;
+      if (should && !running) { running = true; last = 0; requestAnimationFrame(loop); }
+      else if (!should) running = false;
+    };
+    new IntersectionObserver(([en]) => { onScreen = en.isIntersecting; setRunning(); }).observe(canvas);
+    document.addEventListener("visibilitychange", setRunning);
+    new MutationObserver(() => { readColor(); draw(0); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "data-palette"] });
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { readColor(); draw(0); });
+    let rt;
+    addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(resize, 150); });
+    readColor(); resize(); setRunning();
+  }
+
+  /* Fond « réseau » : topologie fixe, des paquets circulent lentement entre les nœuds */
+  function networkScene() {
+    let nodes = [], edges = [], packets = [];
+    return {
+      setup(w, h) {
+        const step = Math.max(110, Math.min(w, h) / 4.5);
+        nodes = [];
+        for (let y = step / 2; y < h; y += step)
+          for (let x = step / 2; x < w; x += step)
+            if (Math.random() < 0.72)
+              nodes.push({ x: x + (Math.random() - 0.5) * step * 0.6, y: y + (Math.random() - 0.5) * step * 0.6, hub: Math.random() < 0.12, glow: 0 });
+        edges = [];
+        nodes.forEach((a, i) => {
+          nodes
+            .map((b, j) => [j, Math.hypot(a.x - b.x, a.y - b.y)])
+            .filter(([j]) => j > i)
+            .sort((p, q) => p[1] - q[1])
+            .slice(0, 2)
+            .forEach(([j, d]) => d < step * 1.7 && edges.push({ a: i, b: j, d }));
+        });
+        packets = [];
+      },
+      frame(ctx, w, h, dt, t, color) {
+        ctx.clearRect(0, 0, w, h);
+        ctx.strokeStyle = ctx.fillStyle = color;
+        ctx.lineWidth = 1;
+        ctx.globalAlpha = 0.16;
+        ctx.beginPath();
+        for (const e of edges) { ctx.moveTo(nodes[e.a].x, nodes[e.a].y); ctx.lineTo(nodes[e.b].x, nodes[e.b].y); }
+        ctx.stroke();
+        if (edges.length && packets.length < Math.max(3, edges.length / 8) && Math.random() < dt / 260) {
+          const e = edges[(Math.random() * edges.length) | 0];
+          packets.push({ e, p: 0, fwd: Math.random() < 0.5 });
+        }
+        for (let i = packets.length - 1; i >= 0; i--) {
+          const k = packets[i], A = nodes[k.fwd ? k.e.a : k.e.b], B = nodes[k.fwd ? k.e.b : k.e.a];
+          k.p += (dt * 0.07) / k.e.d;
+          if (k.p >= 1) { B.glow = 1; packets.splice(i, 1); continue; }
+          const x = A.x + (B.x - A.x) * k.p, y = A.y + (B.y - A.y) * k.p;
+          ctx.globalAlpha = 0.9;
+          ctx.beginPath(); ctx.arc(x, y, 2.2, 0, Math.PI * 2); ctx.fill();
+          ctx.globalAlpha = 0.15;
+          ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI * 2); ctx.fill();
+        }
+        for (const n of nodes) {
+          n.glow = Math.max(0, n.glow - dt / 900);
+          ctx.globalAlpha = 0.35 + n.glow * 0.6;
+          ctx.beginPath(); ctx.arc(n.x, n.y, n.hub ? 3.4 : 2, 0, Math.PI * 2); ctx.fill();
+          if (n.hub) { ctx.globalAlpha = 0.25; ctx.beginPath(); ctx.arc(n.x, n.y, 7, 0, Math.PI * 2); ctx.stroke(); }
+        }
+        ctx.globalAlpha = 1;
+      },
+    };
+  }
+
+  /* Fond « ondes » : formes d'onde sonores qui ondulent lentement (clin d'œil à la régie son) */
+  function wavesScene() {
+    return {
+      setup() {},
+      frame(ctx, w, h, dt, t, color) {
+        ctx.clearRect(0, 0, w, h);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.5;
+        for (let k = 0; k < 4; k++) {
+          const amp = h * (0.05 + k * 0.022), f = 0.0042 + k * 0.0011, ph = t * 0.00035 * (k + 1), y0 = h * (0.62 + k * 0.045);
+          ctx.globalAlpha = 0.1 + k * 0.06;
+          ctx.beginPath();
+          for (let x = 0; x <= w; x += 4) {
+            const env = Math.sin((x / w) * Math.PI);
+            const y = y0 + (Math.sin(x * f + ph) + 0.35 * Math.sin(x * f * 2.4 - ph * 1.6)) * amp * env;
+            x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+          }
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      },
+    };
   }
 
   function initParticles(canvas) {

@@ -1,12 +1,16 @@
 :root {
+  /* Palette par défaut (remplacée par data-palette, voir plus bas) */
+  --acc-l: #1d4ed8;   --acc-d: #60a5fa;
+  --bg-d: #0b1120;    --surface-d: #111a2e;  --surface2-d: #18233a;  --border-d: #26334d;
+
   --bg: #f7f8fa;
   --surface: #ffffff;
   --surface-2: #eef1f5;
   --text: #121826;
   --muted: #5b6475;
   --border: #dde2ea;
-  --accent: #0a7d5a;
-  --accent-soft: rgba(10, 125, 90, 0.1);
+  --accent: var(--acc-l);
+  --accent-soft: color-mix(in srgb, var(--accent) 11%, transparent);
   --shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 8px 24px rgba(16, 24, 40, 0.06);
   --radius: 14px;
   --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -14,32 +18,47 @@
   color-scheme: light;
 }
 
+/* ---------- Palettes ---------- */
+:root[data-palette="bleu"]   { --acc-l: #1d4ed8; --acc-d: #60a5fa; --bg-d: #0b1120; --surface-d: #111a2e; --surface2-d: #18233a; --border-d: #26334d; }
+:root[data-palette="ambre"]  { --acc-l: #b45309; --acc-d: #f5a524; --bg-d: #0f0e0c; --surface-d: #181614; --surface2-d: #221f1b; --border-d: #36312a; }
+:root[data-palette="violet"] { --acc-l: #6d28d9; --acc-d: #a78bfa; --bg-d: #0d0b14; --surface-d: #15121f; --surface2-d: #1e1a2b; --border-d: #2f2943; }
+:root[data-palette="rouge"]  { --acc-l: #c81e1e; --acc-d: #f87171; --bg-d: #0c0c0d; --surface-d: #151517; --surface2-d: #1d1d20; --border-d: #2d2d31; }
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0b0f14;
-    --surface: #121821;
-    --surface-2: #19212c;
-    --text: #e6edf3;
-    --muted: #93a1b3;
-    --border: #243040;
-    --accent: #3ddc97;
-    --accent-soft: rgba(61, 220, 151, 0.12);
+    --bg: var(--bg-d);
+    --surface: var(--surface-d);
+    --surface-2: var(--surface2-d);
+    --text: #e8ecf2;
+    --muted: #9aa4b2;
+    --border: var(--border-d);
+    --accent: var(--acc-d);
+    --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0b0f14;
-  --surface: #121821;
-  --surface-2: #19212c;
-  --text: #e6edf3;
-  --muted: #93a1b3;
-  --border: #243040;
-  --accent: #3ddc97;
-  --accent-soft: rgba(61, 220, 151, 0.12);
+  --bg: var(--bg-d);
+  --surface: var(--surface-d);
+  --surface-2: var(--surface2-d);
+  --text: #e8ecf2;
+  --muted: #9aa4b2;
+  --border: var(--border-d);
+  --accent: var(--acc-d);
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
   color-scheme: dark;
 }
+
+/* ---------- Polices ---------- */
+@font-face { font-family: "OpenDyslexic"; src: url("assets/fonts/opendyslexic-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "OpenDyslexic"; src: url("assets/fonts/opendyslexic-latin-700-normal.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
+:root[data-police="atkinson"] { --font: "Atkinson Hyperlegible", system-ui, sans-serif; }
+:root[data-police="lexend"] { --font: "Lexend", system-ui, sans-serif; }
+:root[data-police="opendyslexic"], :root[data-dys="1"] { --font: "OpenDyslexic", "Atkinson Hyperlegible", system-ui, sans-serif; --mono: "OpenDyslexic", ui-monospace, monospace; }
+:root[data-dys="1"] body, :root[data-police="opendyslexic"] body { line-height: 1.8; }
+:root[data-dys="1"] .hero h1, :root[data-police="opendyslexic"] .hero h1 { font-size: clamp(34px, 6vw, 60px); letter-spacing: 0; }
 
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -450,3 +469,35 @@ a:hover { text-decoration: underline; }
   .report-cover { border: 0; padding: 0; }
   .report h2 { break-after: avoid; }
 }
+
+/* ---------- Fonds de l'accueil (data-fond) ---------- */
+.hero-wrap::before { content: ""; position: absolute; inset: 0; pointer-events: none; }
+:root:not([data-fond="particules"]) .hero__canvas { pointer-events: none; cursor: auto; }
+:root[data-fond="grille"] .hero-wrap { background: radial-gradient(900px 460px at 75% 35%, var(--accent-soft), transparent 70%); }
+:root[data-fond="grille"] .hero-wrap::before {
+  background-image: radial-gradient(color-mix(in srgb, var(--text) 20%, transparent) 1px, transparent 1.5px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 60% 40%, #000 25%, transparent 80%);
+          mask-image: radial-gradient(ellipse 75% 70% at 60% 40%, #000 25%, transparent 80%);
+}
+:root[data-fond="degrade"] .hero-wrap::before {
+  inset: -20%;
+  background:
+    radial-gradient(38% 34% at 28% 32%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 70%),
+    radial-gradient(34% 30% at 76% 58%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 70%);
+  filter: blur(40px);
+  animation: drift 26s ease-in-out infinite alternate;
+}
+@keyframes drift { to { transform: translate3d(6%, -4%, 0) rotate(8deg) scale(1.08); } }
+@media (prefers-reduced-motion: reduce) { :root[data-fond="degrade"] .hero-wrap::before { animation: none; } }
+
+/* ---------- Styles de portrait (data-avatar) ---------- */
+:root[data-avatar="illustration"] .avatar { background: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--accent) 30%, var(--surface)), var(--surface-2) 75%); }
+:root[data-avatar="illustration"] .avatar img { object-fit: contain; object-position: bottom; }
+:root[data-avatar="pochoir"] .avatar { background: color-mix(in srgb, var(--accent) 70%, #fff); }
+:root[data-avatar="pochoir"] .avatar img { mix-blend-mode: multiply; }
+:root[data-avatar="crayon"] .avatar { background: #f6f3ec; }
+:root[data-avatar="crayon"] .avatar img { mix-blend-mode: multiply; }
+
+.dys-btn { font: 700 14px var(--font); width: auto; min-width: 38px; padding: 0 8px; }
+.dys-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
