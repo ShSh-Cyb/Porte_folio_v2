@@ -232,7 +232,7 @@ window.PORTFOLIO = {
       id: "wordpress",
       titre: "Migration d'un site WordPress de WAMP vers PlanetHoster",
       contexte: "formation",
-      periode: "[JJ]/11/25 au [JJ]/11/25",
+      periode: "17/11/25 au 21/11/25",
       description:
         "En binôme avec Lara Bernstein : migration d'un site WordPress développé en local sous WAMP vers un hébergement en ligne chez PlanetHoster (base de données, fichiers, configuration et URL).",
       tags: ["WordPress", "WAMP", "PlanetHoster", "MySQL"],
@@ -641,8 +641,8 @@ window.PORTFOLIO = {
   ],
 
   certifications: [
-    { nom: "Networking Basics", organisme: "Cisco Networking Academy", annee: "", lien: "" },
-    { nom: "[2e certification Cisco — nom à compléter]", organisme: "Cisco Networking Academy", annee: "", lien: "" },
+    { nom: "Networking Devices and Initial Configuration", organisme: "Cisco Networking Academy", annee: "Nov. 2026", lien: "" },
+    { nom: "Networking Basics", organisme: "Cisco Networking Academy", annee: "Févr. 2026", lien: "" },
   ],
 
   contact: {

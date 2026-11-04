@@ -145,7 +145,7 @@ window.PORTFOLIO_EN = {
     {
       id: "wordpress",
       titre: "Migrating a WordPress site from WAMP to PlanetHoster",
-      periode: "[DD]/11/25 to [DD]/11/25",
+      periode: "17/11/25 to 21/11/25",
       description:
         "With Lara Bernstein: migrated a WordPress site developed locally on WAMP to online hosting at PlanetHoster (database, files, configuration and URL).",
       fiche: {
@@ -371,7 +371,7 @@ window.PORTFOLIO_EN = {
   ],
 
   certifications: [
-    {},
-    { nom: "[2nd Cisco certification — name to be completed]" },
+    { annee: "Nov. 2026" },
+    { annee: "Feb. 2026" },
   ],
 };
