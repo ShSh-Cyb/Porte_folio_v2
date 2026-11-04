@@ -14,7 +14,7 @@
   <script src="i18n.js"></script>
   <script>
     // Applique le thème, la palette et le fond avant le rendu (évite un flash).
-    // Aperçu : ?palette=bleu|ambre|violet|rouge  &fond=grille|degrade|reseau|ondes|particules|aucun
+    // Aperçu : ?palette=encre|taupe|prune|framboise|petrole|violet  &accent=%23rrggbb  &fond=grille|degrade|reseau|ondes|particules|aucun
     //          &avatar=illustration|pochoir|crayon|photo  &theme=light|dark
     (function () {
       const r = document.documentElement;
@@ -23,12 +23,25 @@
       const pick = (k, def) => {
         let v = q.get(k);
         try {
-          if (v) sessionStorage.setItem("apercu-" + k, v);
+          if (q.has(k)) sessionStorage.setItem("apercu-" + k, v);
           else v = sessionStorage.getItem("apercu-" + k);
         } catch (e) {}
         return v || def;
       };
-      r.dataset.palette = pick("palette", a.palette || "bleu");
+      r.dataset.palette = pick("palette", a.palette || "encre");
+      // Couleur personnalisée (#rrggbb) : déclinée en version claire et sombre
+      const acc = pick("accent", a.accent || "");
+      const mt = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(acc);
+      if (mt) {
+        const [R, G, B] = mt.slice(1).map((x) => parseInt(x, 16) / 255);
+        const mx = Math.max(R, G, B), mn = Math.min(R, G, B), L = (mx + mn) / 2, D = mx - mn;
+        const S = D ? D / (1 - Math.abs(2 * L - 1)) : 0;
+        const H = !D ? 0 : mx === R ? ((G - B) / D + 6) % 6 : mx === G ? (B - R) / D + 2 : (R - G) / D + 4;
+        const h = Math.round(H * 60), s = Math.round(S * 100), l = Math.round(L * 100);
+        r.dataset.palette = "perso";
+        r.style.setProperty("--acc-l", `hsl(${h} ${Math.min(s, 85)}% ${Math.min(Math.max(l, 26), 42)}%)`);
+        r.style.setProperty("--acc-d", `hsl(${h} ${Math.min(s, 90)}% ${Math.min(Math.max(l, 62), 76)}%)`);
+      }
       r.dataset.fond = pick("fond", a.fond || "grille");
       r.dataset.avatar = pick("avatar", a.avatar || "photo");
       r.dataset.police = pick("police", a.police || "inter");

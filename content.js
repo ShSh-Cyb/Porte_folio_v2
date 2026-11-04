@@ -8,14 +8,17 @@
 window.PORTFOLIO = {
   /*
    * APPARENCE
-   *  palette : "bleu" (réseau), "ambre" (régie), "violet", "rouge" (éditorial)
+   *  palette : "encre" (noir & blanc), "taupe", "prune", "framboise", "petrole", "violet"
+   *            (anciennes : "bleu", "ambre", "rouge")
+   *  accent  : une couleur au choix, ex. "#7e2a63" (remplace la palette)
    *  fond    : fond de l'accueil — "grille", "degrade", "reseau", "ondes", "particules" ou "aucun"
    *  avatar  : "illustration", "pochoir", "crayon" (dessins tirés de ta photo) ou "photo"
    *  police  : "inter", "atkinson" (Atkinson Hyperlegible), "lexend" ou "opendyslexic"
    *            (les visiteurs peuvent aussi activer OpenDyslexic avec le bouton « Aa »)
    */
   apparence: {
-    palette: "bleu",
+    palette: "encre",
+    accent: "",
     fond: "grille",
     avatar: "illustration",
     police: "inter",
