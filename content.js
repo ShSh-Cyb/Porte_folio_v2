@@ -257,7 +257,7 @@ window.PORTFOLIO = {
       id: "migration-windows-11",
       titre: "Migration du parc de postes de Windows 10 vers Windows 11",
       contexte: "pro-1",
-      periode: "29/06/26 au 31/08/26",
+      periode: "29/06/26 au 31/07/26",
       description:
         "Rédaction d'une procédure interne de migration et suivi poste par poste via une checklist Jira en onze étapes, en amont de la fin du support de Windows 10.",
       tags: ["Windows 11", "BitLocker", "Winget", "Jira"],
@@ -293,7 +293,7 @@ window.PORTFOLIO = {
       id: "deploiement-ventoy",
       titre: "Automatisation du déploiement des postes Windows 11 (PowerShell, clé Ventoy)",
       contexte: "pro-1",
-      periode: "29/06/26 au 31/08/26",
+      periode: "29/06/26 au 31/07/26",
       description:
         "Conception d'un script PowerShell de post-installation embarqué sur la clé Ventoy : installation des logiciels et agents, nettoyage des applications, profils « site » et « siège ».",
       tags: ["PowerShell", "Ventoy", "Winget", "Automatisation"],
@@ -328,7 +328,7 @@ window.PORTFOLIO = {
       id: "openvpn",
       titre: "Sécurisation des accès distants avec OpenVPN",
       contexte: "pro-1",
-      periode: "29/06/26 au 31/08/26",
+      periode: "29/06/26 au 31/07/26",
       description:
         "Participation au déploiement d'une surcouche de mot de passe sur les certificats OpenVPN, pour mettre fin au partage de sessions VPN restées ouvertes.",
       tags: ["OpenVPN", "Certificats", "Sécurité"],
@@ -362,7 +362,7 @@ window.PORTFOLIO = {
       id: "diagnostic-certificat",
       titre: "Diagnostic d'un incident de certificat bloquant plusieurs services",
       contexte: "pro-1",
-      periode: "29/06/26 au 31/08/26",
+      periode: "29/06/26 au 31/07/26",
       description:
         "Traitement d'un ticket : erreurs de certificat sur Jira et l'outil de gestion des temps, et perte de remontée de l'agent Endpoint Central sur les postes d'un site distant.",
       tags: ["Diagnostic", "Certificats", "Jira", "Support"],
@@ -395,7 +395,7 @@ window.PORTFOLIO = {
       id: "recuperation-acces",
       titre: "Procédure de récupération d'accès à un poste verrouillé",
       contexte: "pro-1",
-      periode: "29/06/26 au 31/08/26",
+      periode: "29/06/26 au 31/07/26",
       description:
         "Recherche, test et documentation d'une méthode pour réinitialiser le mot de passe administrateur local d'un poste Windows, à l'usage de l'équipe DSI.",
       tags: ["Windows", "WinPE", "Documentation"],
@@ -427,7 +427,7 @@ window.PORTFOLIO = {
       id: "support-parc",
       titre: "Support à distance, gestion de parc et reconditionnement",
       contexte: "pro-1",
-      periode: "29/06/26 au 31/08/26",
+      periode: "29/06/26 au 31/07/26",
       description:
         "Prise en main à distance, mise en conformité et enrôlement des postes, suivi des tickets Jira, inventaire GLPI et reconditionnement des postes anciens sous ChromeOS Flex.",
       tags: ["TeamViewer", "Endpoint Central", "GLPI", "ChromeOS Flex"],
@@ -515,7 +515,7 @@ window.PORTFOLIO = {
     },
     {
       type: "experience",
-      periode: "29 juin — 31 août 2026 (1 mois réparti)",
+      periode: "29 juin — 31 juil. 2026",
       titre: "Technicien DSI — stage",
       lieu: "Hoppen — Rennes",
       details: "Migration du parc vers Windows 11, automatisation du déploiement des postes (PowerShell), sécurisation des accès VPN, support à distance et ticketing Jira, inventaire GLPI.",
