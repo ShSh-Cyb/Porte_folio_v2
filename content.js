@@ -17,11 +17,11 @@ window.PORTFOLIO = {
    *            (les visiteurs peuvent aussi activer OpenDyslexic avec le bouton « Aa »)
    */
   apparence: {
-    palette: "encre",
+    palette: "petrole",
     accent: "",
     fond: "particules",
     avatar: "crayon",
-    police: "inter",
+    police: "atkinson",
   },
 
   profil: {
