@@ -6,7 +6,7 @@
   // Échappe le texte injecté (évite les problèmes avec <, &, etc.)
   const esc = (s) =>
     String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-  const safeUrl = (u) => (/^(https?:|mailto:|\.?\/|assets\/|docs\/|[\w-]+\.(pdf|png|jpe?g|webp|svg|gif|mp4|webm)$)/i.test(u || "") ? u : "");
+  const safeUrl = (u) => (/^(https?:|mailto:|\.?\/|assets\/|docs\/|[\w-]+\.html(\?|#|$)|[\w-]+\.(pdf|png|jpe?g|webp|svg|gif|mp4|webm)$)/i.test(u || "") ? u : "");
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
   const youtubeId = (u) => {
@@ -181,6 +181,7 @@
         <h3>${esc(it.titre)}</h3>
         <p class="tl-lieu">${esc(it.lieu)}</p>
         ${it.details ? `<p>${esc(it.details)}</p>` : ""}
+        ${it.lien && safeUrl(it.lien.url) ? `<p class="tl-link"><a href="${esc(it.lien.url)}">${esc(it.lien.label)}</a></p>` : ""}
       </li>`
     )
     .join("");

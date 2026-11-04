@@ -5,7 +5,7 @@
   const $ = (s) => document.querySelector(s);
   const esc = (s) =>
     String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-  const safeUrl = (u) => (/^(https?:|\.?\/|assets\/|docs\/)/i.test(u || "") ? u : "");
+  const safeUrl = (u) => (/^(https?:|\.?\/|assets\/|docs\/|[\w-]+\.html(\?|#|$))/i.test(u || "") ? u : "");
   const ext = (u) => (String(u).split(/[?#]/)[0].match(/\.(\w+)$/) || [, ""])[1].toLowerCase();
   const youtubeId = (u) => {
     const m = String(u || "").match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
@@ -80,7 +80,9 @@
 
   const prev = list[(idx - 1 + list.length) % list.length];
   const next = list[(idx + 1) % list.length];
+  const rs = D.rapportStage;
   const links = [
+    pr.contexte === "pro-1" && rs && safeUrl(rs.url) && `<a class="btn btn--primary" href="${esc(rs.url)}">📘 ${esc(rs.label)}</a>`,
     safeUrl(pr.lien) && `<a class="btn btn--ghost" href="${esc(pr.lien)}" target="_blank" rel="noopener">Voir la démo ↗</a>`,
     safeUrl(pr.code) && `<a class="btn btn--ghost" href="${esc(pr.code)}" target="_blank" rel="noopener">Code source ↗</a>`,
   ].filter(Boolean).join("");

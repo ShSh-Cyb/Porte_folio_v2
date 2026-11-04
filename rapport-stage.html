@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rapport de stage — Hoppen</title>
+  <meta name="description" content="Rapport de stage BTS SIO SISR — Direction des Systèmes d'Information, Hoppen (Rennes), 2026." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    try {
+      const t = localStorage.getItem("theme");
+      if (t) document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Aller au contenu</a>
+
+  <header class="nav scrolled" id="top">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html">~/portfolio</a>
+      <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Ouvrir le menu">
+        <span></span><span></span>
+      </button>
+      <nav class="nav__links" id="navLinks" aria-label="Navigation principale">
+        <a href="index.html#apropos">À propos</a>
+        <a href="index.html#competences">Compétences</a>
+        <a href="index.html#projets">Réalisations</a>
+        <a href="index.html#veille">Veille</a>
+        <a href="index.html#parcours" class="active">Parcours</a>
+        <a href="index.html#contact">Contact</a>
+        <button class="theme-btn" id="themeBtn" aria-label="Changer de thème" title="Changer de thème">
+          <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container report-page">
+    <a class="back mono" href="index.html#parcours">← Retour au parcours</a>
+
+    <header class="report-cover">
+      <p class="eyebrow mono">BTS SIO — option SISR</p>
+      <h1>Rapport de stage</h1>
+      <p class="report-cover__org">Direction des Systèmes d'Information — <strong>Hoppen</strong>, Rennes</p>
+      <dl class="report-meta">
+        <div><dt>Période</dt><dd>1 mois, réparti du 29 juin au 31 août 2026</dd></div>
+        <div><dt>Stagiaire</dt><dd>Shoghi Sheida</dd></div>
+        <div><dt>Formation</dt><dd>My Digital School — promotion 2025-2027</dd></div>
+        <div><dt>Tuteur entreprise</dt><dd>Technicien DSI</dd></div>
+      </dl>
+      <p class="report-note">Version publiée en ligne : les noms des membres de l'équipe et certaines informations internes à l'entreprise ont été retirés. La version complète est remise au jury.</p>
+      <p><button class="btn btn--ghost" type="button" onclick="window.print()">Imprimer / enregistrer en PDF</button></p>
+    </header>
+
+    <div class="report-layout">
+      <nav class="report-toc" aria-label="Sommaire">
+        <p class="report-toc__title">Sommaire</p>
+        <ol id="toc"></ol>
+      </nav>
+
+      <article class="report" id="report">
+        <h2 id="remerciements">Remerciements</h2>
+        <p>Je tiens à remercier l'ensemble de l'équipe de la Direction des Systèmes d'Information d'HOPPEN pour son accueil et l'accompagnement dont j'ai bénéficié durant ce stage.</p>
+        <p>Je remercie particulièrement mon maître de stage, technicien au sein de la DSI, pour sa disponibilité, ses conseils techniques et la confiance qu'il m'a accordée sur les missions qui m'ont été confiées.</p>
+        <p>Mes remerciements s'adressent également à l'ensemble des collaborateurs d'HOPPEN que j'ai pu solliciter au quotidien, ainsi qu'à My Digital School pour le suivi de ce stage.</p>
+
+        <h2 id="introduction">Introduction</h2>
+        <p>Dans le cadre de ma formation en BTS Services Informatiques aux Organisations (BTS SIO), option SISR, j'ai effectué un stage d'un mois au sein de la société HOPPEN, entreprise rennaise spécialisée dans la digitalisation des établissements de santé, réparti du 29 juin au 31 août 2026.</p>
+        <p>Ce stage s'est déroulé au sein de la Direction des Systèmes d'Information (DSI), qui a pour mission d'assurer le bon fonctionnement, la sécurité et l'évolution du parc informatique de l'entreprise, ainsi que le support aux utilisateurs internes.</p>
+        <p>Ce document présente dans un premier temps l'entreprise HOPPEN et sa DSI, puis détaille les différentes missions qui m'ont été confiées durant ce stage : la migration du parc de postes vers Windows 11, l'automatisation du déploiement des postes, l'administration et le support à distance, la gestion des incidents, la sécurisation des accès distants par OpenVPN, ainsi que des interventions de maintenance matérielle et de récupération d'accès aux postes. Enfin, une dernière partie revient sur les compétences techniques et transversales développées au cours de cette expérience.</p>
+
+        <h2 id="entreprise">I. Présentation de l'entreprise</h2>
+        <h3>1.1 HOPPEN en quelques mots</h3>
+        <p>Fondée en 2011 à Rennes par Matthieu Mallédant et Sébastien Duré, HOPPEN est une entreprise spécialisée dans les solutions digitales destinées aux patients et aux personnels soignants. Elle développe notamment des « chambres connectées » et des terminaux multimédias qui permettent d'améliorer le confort des patients hospitalisés tout en réduisant le temps consacré par le personnel soignant à des tâches administratives ou logistiques non liées directement au soin.</p>
+        <p>Reconnue comme un acteur de référence de l'Hôpital Digital en France, HOPPEN accompagne de nombreux établissements de santé dans leur transformation numérique, avec une double exigence de performance opérationnelle et de sécurité des données, particulièrement sensible dans le secteur hospitalier.</p>
+        <h3>1.2 La Direction des Systèmes d'Information (DSI)</h3>
+        <p>La DSI d'HOPPEN est chargée de garantir le fonctionnement, la sécurité et l'évolution du système d'information interne de l'entreprise. Ses missions couvrent notamment :</p>
+        <ul>
+          <li>la gestion et la maintenance du parc informatique (postes de travail, périphériques) ;</li>
+          <li>le support et l'assistance aux utilisateurs internes ;</li>
+          <li>l'administration des accès (comptes, VPN, endpoints) ;</li>
+          <li>le suivi et la résolution des incidents via l'outil de ticketing Jira ;</li>
+          <li>la gestion de l'inventaire matériel et logiciel du parc via GLPI ;</li>
+          <li>la sécurisation des systèmes et des accès distants.</li>
+        </ul>
+        <p>La DSI s'inscrit au sein de la Direction Développement Produits d'HOPPEN, qui regroupe quatre pôles : la DSI, le pôle Industrialisation et Architecture Systèmes, le pôle Digital Factory et le pôle Qualification.</p>
+        <p>L'équipe DSI, que j'ai intégrée durant mon stage, est composée d'un responsable IT / administrateur système et de deux techniciens DSI, dont mon maître de stage. C'est au sein de cette équipe, et sous la responsabilité directe de mon maître de stage, que j'ai réalisé les missions décrites dans ce rapport.</p>
+
+        <h2 id="missions">II. Missions et activités réalisées</h2>
+        <p>Durant ce stage, j'ai été intégré à l'activité quotidienne de la DSI et j'ai pu contribuer à plusieurs missions concrètes, détaillées ci-dessous.</p>
+
+        <h3 id="m-windows11">2.1 Migration du parc de postes de Windows 10 vers Windows 11</h3>
+        <p class="report-link"><a href="realisation.html?id=migration-windows-11">Voir la fiche de réalisation →</a></p>
+        <p>Une des missions principales de ce stage a consisté à accompagner la migration des postes de travail de Windows 10 vers Windows 11, en amont de la fin du support de Windows 10. Pour fiabiliser et standardiser cette opération, j'ai rédigé une procédure interne détaillant chaque étape du processus, afin qu'elle puisse être reproduite de manière identique sur l'ensemble du parc. Le suivi de cette procédure a également été formalisé dans Jira sous forme d'une checklist à onze étapes, permettant de suivre l'avancement de chaque migration poste par poste :</p>
+        <ul>
+          <li>vérification de la compatibilité matérielle (PC Health Check : processeur, RAM, TPM 2.0, Secure Boot) ;</li>
+          <li>création d'un compte local dédié à l'installation, utilisé pour piloter la migration indépendamment du compte de l'utilisateur ;</li>
+          <li>sauvegarde des données utilisateur et création d'un point de restauration ;</li>
+          <li>vérification de l'espace disque disponible ;</li>
+          <li>désactivation puis réactivation de BitLocker, avec sauvegarde de la clé de récupération ;</li>
+          <li>mise à jour de Windows et des logiciels via Winget ;</li>
+          <li>lancement de la mise à niveau, puis redémarrage et installation ;</li>
+          <li>vérifications post-migration (pilotes, imprimantes, VPN, logiciels métier) ;</li>
+          <li>nettoyage de disque en fin de procédure.</li>
+        </ul>
+        <p>Chaque étape de la checklist Jira était cochée au fur et à mesure de son exécution, ce qui offrait une visibilité claire sur l'avancement de la migration et facilitait la reprise en cas d'interruption. Cette documentation a permis de sécuriser les migrations (aucune perte de données, chiffrement toujours actif en fin de procédure) et de gagner en autonomie sur cette tâche récurrente.</p>
+
+        <h3 id="m-ventoy">2.2 Automatisation du déploiement des postes (script sur clé Ventoy)</h3>
+        <p class="report-link"><a href="realisation.html?id=deploiement-ventoy">Voir la fiche de réalisation →</a></p>
+        <p>Afin de simplifier et de fiabiliser l'installation des nouveaux postes, j'ai conçu un script d'automatisation du déploiement post-installation de Windows 11, embarqué sur la clé Ventoy utilisée pour l'installation du système. Le déploiement est structuré en deux niveaux : un script « bootstrap », intégré dans le fichier autounattend.xml généré pour chaque configuration, qui se contente de localiser la clé Ventoy (par son étiquette de volume, plus fiable qu'une lettre de lecteur qui varie d'une machine à l'autre), de copier les fichiers en local, puis de lancer le script principal ; et ce script principal, qui concentre toute la logique métier et reste strictement identique sur toutes les clés. Cette séparation permet de faire évoluer le script sans jamais avoir à régénérer les fichiers XML d'installation.</p>
+        <p>Une fois lancé, le script :</p>
+        <ul>
+          <li>règle le volume principal à 0 en début de déploiement (sans le couper), via l'API Core Audio, afin d'éviter la cascade d'alertes sonores liée à l'installation des pilotes, tout en laissant le curseur de volume librement réglable par l'utilisateur ;</li>
+          <li>attend la disponibilité réelle de winget avant de poursuivre, ce composant n'étant pas toujours prêt immédiatement après le premier démarrage ;</li>
+          <li>installe Google Chrome, Mozilla Firefox, l'agent GLPI et l'agent ManageEngine Endpoint Central, via winget ou en mode silencieux ;</li>
+          <li>supprime les applications préinstallées non désirées (WhatsApp, Teams grand public, Solitaire, LinkedIn, composants Xbox), en traitant à la fois les comptes existants et le paquet provisionné, afin d'éviter leur réapparition pour tout nouveau compte créé sur la machine ;</li>
+          <li>applique l'un des deux profils de déploiement (« site » ou « siège ») : le profil site supprime Teams et Outlook (new) puis désactive le démarrage automatique de OneDrive, tandis que le profil siège les conserve.</li>
+        </ul>
+        <p>Le script intégrait initialement l'installation de TeamViewer via winget, fonctionnelle sur le plan technique. Cette approche a cependant été abandonnée car le paquet winget générique ne permettait pas d'appliquer la charte graphique de l'entreprise sur le client TeamViewer, celle-ci nécessitant un module personnalisé propre à la console de gestion TeamViewer, distinct du paquet public. Il a donc été décidé, avec mon maître de stage, de confier le déploiement de TeamViewer à Endpoint Central, qui gère nativement ce besoin de personnalisation. La partie du script correspondante a été conservée en commentaire plutôt que supprimée, afin de pouvoir être réactivée facilement si ce choix venait à être reconsidéré.</p>
+        <p>Le script est rejouable : une exécution sur un poste déjà traité ignore les logiciels déjà installés et ne génère pas d'erreur sur les suppressions déjà faites. Il peut ainsi être utilisé de deux façons : automatiquement, à la première connexion suivant une installation Windows depuis la clé Ventoy ; ou manuellement, via un fichier de lancement dédié, pour un nettoyage ou une remise en conformité d'un poste déjà en service. Chaque étape est journalisée dans un fichier de log, et un pop-up récapitulatif s'affiche en fin d'exécution (bandeau vert ou orange selon la présence d'erreurs), avec fermeture automatique au bout de 5 minutes pour ne pas bloquer un déploiement automatique sans utilisateur devant l'écran.</p>
+        <p>Cette mission m'a confronté à plusieurs difficultés techniques concrètes, que j'ai dû diagnostiquer et corriger :</p>
+        <ul>
+          <li>un blocage silencieux de winget dû à une invite interactive non gérée en environnement non surveillé, résolu en forçant des sources et options non interactives sur toutes les commandes ;</li>
+          <li>un échec global du déploiement lorsque le script principal rencontrait une erreur fatale, provoqué par le partage d'un même processus PowerShell avec le script bootstrap : corrigé en lançant le script principal dans un processus séparé, pour que son échec n'interrompe plus la chaîne complète ;</li>
+          <li>une indisponibilité temporaire de winget juste après la première connexion, due à un composant Windows provisionné de façon asynchrone, résolue par une fonction de détection testant plusieurs emplacements possibles, avec une boucle d'attente bornée ;</li>
+          <li>un curseur de volume resté bloqué sur les machines fraîchement installées : la coupure du son (SetMute) s'appliquait au périphérique audio générique présent avant l'installation du vrai pilote, et restait bloquée après la mise à jour de celui-ci. Remplacée par un simple réglage du volume à 0, qui reste réglable quel que soit l'état du pilote.</li>
+        </ul>
+        <p>Au cours de cette mission, j'ai également été attentif à la gestion des informations sensibles manipulées par le script, un point de vigilance que j'ai signalé à l'équipe.</p>
+
+        <h3 id="m-support">2.3 Administration et support à distance des postes</h3>
+        <p class="report-link"><a href="realisation.html?id=support-parc">Voir la fiche de réalisation →</a></p>
+        <p>J'ai assuré la prise en main à distance des postes utilisateurs via TeamViewer, dans le cadre d'opérations de support et de mise en conformité des postes aux normes internes de la DSI. Cette mission comprenait :</p>
+        <ul>
+          <li>l'enrôlement des postes via l'agent Endpoint Central, pour un suivi et une gestion centralisés ;</li>
+          <li>la désactivation temporaire du contrôle de compte utilisateur (UAC) via l'agent Endpoint Central, afin de permettre l'exécution de scripts et de commandes en mode administrateur à distance, puis sa réactivation une fois les opérations terminées afin de restaurer la configuration de sécurité standard du poste ;</li>
+          <li>la configuration d'un accès simplifié sur TeamViewer, pour faciliter les interventions ultérieures ;</li>
+          <li>la vérification de la conformité des postes aux normes de sécurité et de configuration de l'entreprise.</li>
+        </ul>
+
+        <h3 id="m-jira">2.4 Gestion des incidents (ticketing Jira)</h3>
+        <p>Le suivi des demandes et incidents utilisateurs s'effectue via l'outil Jira. J'ai pris en charge la création, la qualification et le suivi de tickets, ce qui m'a permis de me familiariser avec une méthode structurée de gestion des incidents. Jira a également été utilisé pour structurer certaines missions sous forme de checklists de tâches, comme pour la migration Windows 11 (cf. 2.1), avec un suivi visuel de l'avancement de chaque étape.</p>
+
+        <h3 id="m-openvpn">2.5 Sécurisation des accès distants : déploiement d'OpenVPN</h3>
+        <p class="report-link"><a href="realisation.html?id=openvpn">Voir la fiche de réalisation →</a></p>
+        <p>Mon maître de stage a mis en place une procédure de sécurisation des accès distants au réseau de l'entreprise via OpenVPN, à laquelle j'ai contribué pour la mise en œuvre et l'application sur le terrain. Le problème initial ne portait pas tant sur le certificat lui-même que sur un usage à risque qu'il induisait : le mot de passe réseau associé, complexe, était difficile à retenir pour les utilisateurs, qui avaient tendance à l'enregistrer dans OpenVPN GUI et à ne pas se déconnecter, si bien que plusieurs personnes finissaient par partager un même compte via une session restée ouverte. L'idée retenue a donc été d'ajouter une surcouche de mot de passe simple, propre au certificat, que l'application ne peut pas mémoriser : chaque utilisation nécessite ainsi une saisie manuelle, sans pour autant complexifier l'usage au quotidien.</p>
+        <p>N'ayant pas les droits d'accès nécessaires à la manipulation des certificats .p12, l'étape de re-chiffrement (PowerShell et OpenSSL) a été réalisée par mon maître de stage. En amont, j'ai pris contact avec les responsables d'équipe concernés afin d'identifier nominativement les personnes amenées à utiliser cet accès, le nom d'utilisateur associé à chaque certificat .p12 étant propre à chaque personne. Ma contribution a ensuite porté sur :</p>
+        <ul>
+          <li>le déploiement des certificats finaux dans OpenVPN sur les postes concernés et l'adaptation du fichier de profil .ovpn ;</li>
+          <li>la vérification du bon fonctionnement de la connexion pour chaque utilisateur ;</li>
+          <li>la mise en page et la mise au propre de la documentation décrivant la procédure de sécurisation.</li>
+        </ul>
+        <p>Cette mission m'a permis de me familiariser avec la mise en œuvre de certificats dans un contexte VPN, et de comprendre qu'une problématique de sécurité recouvre souvent, derrière son aspect technique, un enjeu d'usage et de comportement des utilisateurs, ainsi que l'importance d'une bonne coordination avec les équipes utilisatrices en amont d'un déploiement.</p>
+
+        <h3 id="m-glpi">2.6 Gestion de l'inventaire et sensibilisation à la sécurité (GLPI)</h3>
+        <p>Contrairement à Jira, utilisé pour le ticketing, l'outil GLPI est employé au sein de la DSI uniquement pour la gestion de l'inventaire matériel et logiciel du parc informatique : chaque poste y dispose d'une fiche recensant ses caractéristiques techniques (modèle, numéro de série, statut, utilisateur affecté), ses composants et les logiciels installés.</p>
+        <p>Les échanges avec mon maître de stage sur la gestion des informations de récupération des postes chiffrés m'ont permis de mieux comprendre l'arbitrage entre disponibilité et confidentialité dans la gestion des secrets en entreprise : le risque de perdre définitivement l'accès à un poste chiffré peut être jugé plus critique que celui d'une exposition contrôlée de l'information, à condition que son accès reste soumis à une authentification. Un compromis qui n'est pas toujours celui que l'on imagine de prime abord.</p>
+
+        <h3 id="m-maintenance">2.7 Maintenance matérielle et récupération d'accès</h3>
+        <p class="report-link"><a href="realisation.html?id=recuperation-acces">Voir la fiche de réalisation →</a></p>
+        <p>En complément des missions logicielles, j'ai également démonté différents types de postes (ordinateurs de bureau, mini PC, ordinateurs portables) dans le cadre d'opérations de diagnostic et de maintenance, ce qui m'a permis de me familiariser avec des architectures et des contraintes de démontage variées selon le format du matériel. Pour les postes trop anciens pour être éligibles à la migration vers Windows 11 (cf. 2.1), j'ai installé ChromeOS Flex, un système d'exploitation léger permettant de leur donner une seconde vie plutôt que de les réformer.</p>
+        <p>Cette solution soulève cependant, à mon sens, une question d'administration : elle introduit une gestion hybride du parc, entre les outils habituels de la DSI pour les postes Windows (GLPI, Endpoint Central, scripts de déploiement) et un écosystème ChromeOS distinct, géré via sa propre console d'administration. Si le nombre de postes concernés venait à augmenter, ce doublement des outils et des procédures pourrait complexifier le suivi et la supervision du parc à moyen terme — une interrogation que je n'ai pas eu l'occasion d'approfondir avec l'équipe DSI durant mon stage.</p>
+        <p>Le responsable IT m'a proposé un défi : trouver et documenter moi-même une méthode permettant de réinitialiser l'accès à un poste dont le mot de passe administrateur local avait été perdu. J'ai donc recherché et testé une méthode de récupération, depuis l'environnement d'installation de Windows (WinPE) démarré sur une clé USB, que j'ai ensuite formalisée dans une documentation technique à l'usage de l'équipe. La procédure prévoit la restauration immédiate de la configuration d'origine du poste une fois l'accès rétabli.</p>
+        <p>Cette procédure comporte un périmètre et des limites que j'ai pris soin de documenter : elle ne s'applique qu'aux comptes locaux (elle ne permet pas de modifier un mot de passe de compte Microsoft en ligne ou de domaine Active Directory), et nécessite la clé de récupération BitLocker si le chiffrement est actif sur le poste, le démarrage sur un support externe étant alors conditionné à cette clé.</p>
+
+        <h3 id="m-certificat">2.8 Diagnostic d'un problème de certificat bloquant plusieurs services</h3>
+        <p class="report-link"><a href="realisation.html?id=diagnostic-certificat">Voir la fiche de réalisation →</a></p>
+        <p>J'ai traité un ticket concernant un problème de certificat affectant des postes d'un site distant : les navigateurs signalaient une erreur de sécurité (certificat non valide) en tentant d'accéder à Jira ainsi qu'à l'outil de gestion des temps. Le test réalisé sur un second poste a révélé le même problème, accompagné d'une perte de remontée de l'agent ManageEngine Endpoint Central sur les deux machines. Ce faisceau d'indices m'a orienté vers l'hypothèse d'un blocage ou d'une interception au niveau du réseau du site, plutôt qu'un problème isolé à un poste.</p>
+        <p>En attendant une résolution côté réseau, hors de mon périmètre d'intervention, j'ai mis en place une solution de contournement temporaire et volontairement isolée : un raccourci dédié lançant Microsoft Edge dans un profil utilisateur totalement séparé du profil habituel, avec une vérification des certificats assouplie uniquement dans ce profil, ouvrant directement les pages de connexion des outils concernés.</p>
+        <p>Cette solution comporte un compromis de sécurité assumé et documenté comme tel : ce profil dédié ne doit être utilisé que pour les quelques sites de confiance explicitement configurés. L'isolement dans un profil de navigateur séparé permet cependant de ne pas affecter la session habituelle de l'utilisateur, qui reste protégée normalement — un exemple concret d'arbitrage entre continuité de service et sécurité, dans l'attente d'une correction plus durable.</p>
+
+        <h2 id="competences">III. Compétences et apports du stage</h2>
+        <h3>3.1 Compétences techniques développées</h3>
+        <ul>
+          <li><strong>Administration de postes Windows</strong> : migration de version, gestion de BitLocker, mises à jour via Winget ;</li>
+          <li><strong>Maintenance matérielle</strong> : démontage et diagnostic de postes de formats variés (mini PC, portables), installation de ChromeOS Flex ;</li>
+          <li><strong>Automatisation</strong> : conception d'un script de déploiement (clé Ventoy) en PowerShell, gestion de processus, du registre Windows et interopérabilité COM ;</li>
+          <li><strong>Sécurité réseau</strong> : déploiement d'accès VPN sécurisés (OpenVPN, certificats) et coordination avec les équipes utilisatrices ;</li>
+          <li><strong>Outils de support et de suivi</strong> : prise en main à distance (TeamViewer), gestion d'endpoints, ticketing (Jira) ;</li>
+          <li><strong>Rédaction technique</strong> : production de procédures internes réutilisables par l'équipe DSI ;</li>
+          <li><strong>Récupération de systèmes</strong> : recherche, test et documentation d'une procédure de réinitialisation d'accès à des postes verrouillés ;</li>
+          <li><strong>Diagnostic réseau</strong> : identification d'un blocage réseau à partir d'erreurs de certificat convergentes sur plusieurs services.</li>
+        </ul>
+        <h3>3.2 Compétences transversales</h3>
+        <ul>
+          <li>Autonomie et rigueur dans la conduite de tâches techniques à fort enjeu (sécurité, disponibilité des postes) ;</li>
+          <li>Capacité à diagnostiquer et résoudre méthodiquement des dysfonctionnements techniques complexes ;</li>
+          <li>Communication avec les utilisateurs lors des interventions à distance ;</li>
+          <li>Capacité à documenter et transmettre une procédure de manière claire et reproductible ;</li>
+          <li>Vigilance et esprit critique vis-à-vis de la gestion des données sensibles au sein des outils internes ;</li>
+          <li>Priorisation des tâches dans un contexte de support multi-demandes.</li>
+        </ul>
+        <h3>3.3 Lien avec le référentiel BTS SIO – option SISR</h3>
+        <p>Les missions réalisées durant ce stage s'inscrivent directement dans le référentiel de l'option SISR du BTS SIO, notamment dans les blocs de compétences liés à la gestion du parc informatique, au support aux utilisateurs et à la sécurisation des accès et des données. Ce stage m'a permis de mettre en pratique, en conditions réelles, des compétences abordées en formation, tout en découvrant les contraintes propres à un environnement professionnel exigeant en matière de sécurité, comme celui du secteur de la santé.</p>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>Ce stage d'un mois au sein de la DSI d'HOPPEN m'a permis de mettre en application des compétences acquises durant ma formation, tout en découvrant le fonctionnement d'une équipe informatique en entreprise. Entre migration de parc, automatisation, support aux utilisateurs et sécurisation des accès distants, j'ai pu aborder des missions variées, représentatives du quotidien d'un technicien en systèmes et réseaux. Au-delà des aspects techniques, j'ai été très bien accueilli au sein de l'équipe tout au long de ce stage.</p>
+        <p>Je note toutefois un axe d'amélioration possible sur la transmission de certaines informations pratiques à l'arrivée d'un nouveau stagiaire : le code d'accès au local à vélos ne m'avait pas été communiqué, ce qui m'a contraint à le demander en urgence le jour où je suis arrivé à vélo et me suis retrouvé bloqué devant le local. De la même façon, je n'ai appris que le dernier jour de mon stage que mon badge donnait également accès au parking souterrain, faute d'information contraire en début de stage. Une transmission plus complète de ce type d'informations pratiques dès le premier jour faciliterait l'intégration des futurs arrivants.</p>
+        <p>Sur un plan plus général, j'ai eu le sentiment que l'équipe DSI était souvent accaparée par la gestion des urgences du quotidien, avec assez peu de disponibilité pour du travail de fond — un ressenti à nuancer, ne sachant pas s'il est représentatif de l'activité habituelle de l'équipe ou lié à la période estivale. Je tiens cependant à préciser qu'à aucun moment je n'ai ressenti de pression en tant que stagiaire : l'équipe est toujours restée disponible et bienveillante avec moi, malgré cette charge de travail apparente.</p>
+        <p>Cette expérience a renforcé mon intérêt pour les métiers de l'infrastructure et de la sécurité informatique, et m'a confirmé dans mon souhait de poursuivre dans cette voie à l'issue de mon BTS SIO. Elle m'a également permis de développer mon autonomie et ma capacité à documenter mon travail, deux qualités essentielles dans le métier de technicien informatique.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="year"></span> Shoghi Sheida</p>
+      <a href="#top">Retour en haut ↑</a>
+    </div>
+  </footer>
+
+  <script src="common.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    // Sommaire généré à partir des titres
+    const toc = document.getElementById("toc");
+    document.querySelectorAll("#report h2, #report h3").forEach((h, i) => {
+      if (!h.id) h.id = "s" + i;
+      const li = document.createElement("li");
+      li.className = h.tagName === "H3" ? "sub" : "";
+      li.innerHTML = `<a href="#${h.id}"></a>`;
+      li.firstChild.textContent = h.textContent;
+      toc.appendChild(li);
+    });
+    // Lien actif dans le sommaire
+    const links = [...toc.querySelectorAll("a")];
+    const spy = new IntersectionObserver(
+      (entries) => entries.forEach((en) => {
+        if (en.isIntersecting) links.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
+      }),
+      { rootMargin: "-20% 0px -70% 0px" }
+    );
+    document.querySelectorAll("#report h2, #report h3").forEach((h) => spy.observe(h));
+  </script>
+</body>
+</html>

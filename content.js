@@ -481,6 +481,9 @@ window.PORTFOLIO = {
     },
   ],
 
+  // Page « Rapport de stage » (version publique, anonymisée) — liée au stage Hoppen
+  rapportStage: { label: "Lire le rapport de stage", url: "rapport-stage.html" },
+
   /*
    * DOCUMENTS DE L'ÉPREUVE (affichés seulement s'ils ont une url)
    * Attention : ces documents seront publics si le site est en ligne.
@@ -512,10 +515,11 @@ window.PORTFOLIO = {
     },
     {
       type: "experience",
-      periode: "29 juin — 31 août 2026",
+      periode: "29 juin — 31 août 2026 (1 mois réparti)",
       titre: "Technicien DSI — stage",
       lieu: "Hoppen — Rennes",
       details: "Migration du parc vers Windows 11, automatisation du déploiement des postes (PowerShell), sécurisation des accès VPN, support à distance et ticketing Jira, inventaire GLPI.",
+      lien: { label: "Lire le rapport de stage →", url: "rapport-stage.html" },
     },
     {
       type: "formation",
