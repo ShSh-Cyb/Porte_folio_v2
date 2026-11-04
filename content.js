@@ -323,7 +323,13 @@ window.PORTFOLIO = {
         resultats:
           "Migrations sécurisées : aucune perte de données et chiffrement toujours actif en fin de procédure. La checklist Jira donne une vision claire de l'avancement et facilite la reprise en cas d'interruption.",
       },
-      documents: [],
+      documents: [
+        {
+          label: "Procédure de migration Windows 10 → Windows 11",
+          url: "docs/migration-windows-11/procedure-migration-windows-11.pdf",
+          description: "Procédure en 11 étapes rédigée pendant le stage (version anonymisée, 4 pages)",
+        },
+      ],
       lien: "",
       code: "",
       image: "",

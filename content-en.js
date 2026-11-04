@@ -209,6 +209,9 @@ window.PORTFOLIO_EN = {
         resultats:
           "Safe migrations: no data loss and encryption still active at the end of the procedure. The Jira checklist gives a clear view of progress and makes it easy to resume after an interruption.",
       },
+      documents: [
+        { url: "docs/migration-windows-11/procedure-migration-windows-11.pdf", label: "Windows 10 → Windows 11 migration procedure (in French)", description: "11-step procedure written during the internship (anonymised version, 4 pages)" },
+      ],
     },
     {
       id: "deploiement-ventoy",
