@@ -19,8 +19,8 @@ window.PORTFOLIO = {
   apparence: {
     palette: "encre",
     accent: "",
-    fond: "grille",
-    avatar: "illustration",
+    fond: "particules",
+    avatar: "crayon",
     police: "inter",
   },
 

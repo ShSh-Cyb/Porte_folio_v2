@@ -401,7 +401,8 @@
 
   function initParticles(canvas) {
     const ctx = canvas.getContext("2d");
-    const LINK = 120, MOUSE_R = 170, MAX = 140;
+    const LINK = 120, MOUSE_R = 170, MAX = 140, PING_R = 280, PING_MS = 1400;
+    let lastTs = 0;
     let w = 0, h = 0, pts = [], color = "#3ddc97", running = false, onScreen = true;
     const mouse = { x: -1e4, y: -1e4 };
     const waves = [];
@@ -410,6 +411,7 @@
     const spawn = (x, y) => ({
       x: x ?? Math.random() * w, y: y ?? Math.random() * h,
       vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5, r: Math.random() * 1.6 + 0.8,
+      glow: 0, // 0 → 1 : nœud « touché » par l'onde du ping
     });
     function resize() {
       const dpr = Math.min(devicePixelRatio || 1, 2);
@@ -428,8 +430,9 @@
         for (let j = i + 1; j < pts.length; j++) {
           const b = pts[j], dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
           if (d2 < LINK * LINK) {
-            ctx.globalAlpha = (1 - Math.sqrt(d2) / LINK) * 0.35;
-            ctx.lineWidth = 1;
+            const g = Math.max(a.glow, b.glow);
+            ctx.globalAlpha = (1 - Math.sqrt(d2) / LINK) * (0.35 + g * 0.55);
+            ctx.lineWidth = 1 + g * 0.8;
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           }
         }
@@ -439,17 +442,47 @@
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
         }
         ctx.globalAlpha = 0.8;
-        ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(a.x, a.y, a.r * (1 + a.glow * 1.2), 0, Math.PI * 2); ctx.fill();
+        if (a.glow > 0.05) { // halo du nœud touché
+          ctx.globalAlpha = a.glow * 0.25;
+          ctx.beginPath(); ctx.arc(a.x, a.y, a.r + 6 + (1 - a.glow) * 6, 0, Math.PI * 2); ctx.fill();
+        }
       }
+      // Ping : trois anneaux qui s'élargissent en ralentissant, et un point central qui s'éteint
       for (const wv of waves) {
-        ctx.globalAlpha = Math.max(0, 1 - wv.r / 260) * 0.6;
-        ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.arc(wv.x, wv.y, wv.r, 0, Math.PI * 2); ctx.stroke();
+        for (let k = 0; k < 3; k++) {
+          const t = wv.t - k * 0.12;
+          if (t <= 0 || t >= 1) continue;
+          const e = 1 - Math.pow(1 - t, 3); // ease-out
+          ctx.globalAlpha = (1 - t) * (0.55 - k * 0.15);
+          ctx.lineWidth = 2 - k * 0.5;
+          ctx.beginPath(); ctx.arc(wv.x, wv.y, e * PING_R, 0, Math.PI * 2); ctx.stroke();
+        }
+        ctx.globalAlpha = Math.max(0, 1 - wv.t * 3) * 0.8;
+        ctx.beginPath(); ctx.arc(wv.x, wv.y, 3 + wv.t * 10, 0, Math.PI * 2); ctx.fill();
       }
       ctx.globalAlpha = 1;
     }
-    function update() {
+    function update(dt) {
+      // Avancée des pings : un nœud s'allume quand le front de l'onde le dépasse
+      for (let i = waves.length - 1; i >= 0; i--) {
+        const wv = waves[i];
+        wv.t += dt / PING_MS;
+        const front = (1 - Math.pow(1 - Math.min(wv.t, 1), 3)) * PING_R;
+        for (const a of pts) {
+          if (wv.hit.has(a)) continue;
+          const dx = a.x - wv.x, dy = a.y - wv.y, d = Math.hypot(dx, dy) || 1;
+          if (d <= front) {
+            wv.hit.add(a);
+            const f = 1 - d / PING_R;
+            a.glow = Math.max(a.glow, 0.4 + f * 0.6);
+            a.vx += (dx / d) * f * 1.1; a.vy += (dy / d) * f * 1.1; // légère poussée, sans éparpiller
+          }
+        }
+        if (wv.t > 1.3) waves.splice(i, 1);
+      }
       for (const a of pts) {
+        a.glow = Math.max(0, a.glow - dt / 900);
         const dx = mouse.x - a.x, dy = mouse.y - a.y, d = Math.hypot(dx, dy);
         if (d < MOUSE_R && d > 1) { a.vx += (dx / d) * 0.02; a.vy += (dy / d) * 0.02; } // attirées par la souris
         a.vx += (Math.random() - 0.5) * 0.03; a.vy += (Math.random() - 0.5) * 0.03;
@@ -460,16 +493,17 @@
         if (a.x < 0 || a.x > w) { a.vx *= -1; a.x = Math.min(Math.max(a.x, 0), w); }
         if (a.y < 0 || a.y > h) { a.vy *= -1; a.y = Math.min(Math.max(a.y, 0), h); }
       }
-      for (let i = waves.length - 1; i >= 0; i--) if ((waves[i].r += 6) > 260) waves.splice(i, 1);
     }
-    function loop() {
+    function loop(ts) {
       if (!running) return;
-      update(); draw();
+      const dt = lastTs ? Math.min(50, ts - lastTs) : 16;
+      lastTs = ts;
+      update(dt); draw();
       requestAnimationFrame(loop);
     }
     const setRunning = () => {
       const should = !reduceMotion && onScreen && !document.hidden;
-      if (should && !running) { running = true; requestAnimationFrame(loop); }
+      if (should && !running) { running = true; lastTs = 0; requestAnimationFrame(loop); }
       else if (!should) running = false;
     };
 
@@ -483,17 +517,10 @@
     wrap.addEventListener("click", (e) => {
       if (e.target.closest("a, button")) return;
       const r = canvas.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-      // Onde de choc : repousse les particules et en ajoute quelques-unes
-      for (const a of pts) {
-        const dx = a.x - x, dy = a.y - y, d = Math.hypot(dx, dy) || 1;
-        if (d < 220) { const f = (1 - d / 220) * 6; a.vx += (dx / d) * f; a.vy += (dy / d) * f; }
-      }
-      for (let k = 0; k < 5 && pts.length < MAX; k++) {
-        const q = spawn(x, y), ang = Math.random() * Math.PI * 2;
-        q.vx = Math.cos(ang) * 2; q.vy = Math.sin(ang) * 2; pts.push(q);
-      }
-      waves.push({ x, y, r: 0 });
-      if (reduceMotion) draw();
+      // « Ping » réseau : un nouveau nœud rejoint le réseau et une onde se propage
+      if (pts.length < MAX) { const q = spawn(x, y); q.vx = q.vy = 0; q.glow = 1; pts.push(q); }
+      if (waves.length < 4) waves.push({ x, y, t: 0, hit: new Set() });
+      if (reduceMotion) { for (const a of pts) if (Math.hypot(a.x - x, a.y - y) < PING_R) a.glow = 1; draw(); for (const a of pts) a.glow = 0; }
     });
 
     new IntersectionObserver(([en]) => { onScreen = en.isIntersecting; setRunning(); }).observe(canvas);

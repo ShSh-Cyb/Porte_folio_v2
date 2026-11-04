@@ -55,7 +55,7 @@
     "Voir mes réalisations": "See my projects",
     "Télécharger mon CV": "Download my CV",
     "Me contacter": "Contact me",
-    "↖ bouge la souris · clique pour une onde": "↖ move your mouse · click for a wave",
+    "↖ bouge la souris · clique pour lancer un ping": "↖ move your mouse · click to send a ping",
     "Réalisations professionnelles": "Professional projects",
     "Filtrer les réalisations": "Filter projects",
     "Toutes": "All",
