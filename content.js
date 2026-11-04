@@ -423,7 +423,7 @@ window.PORTFOLIO = {
   contact: {
     email: "shoghijean@gmail.com",
     github: "https://github.com/ShSh-Cyb",
-    linkedin: "", // ex. "https://www.linkedin.com/in/ton-profil"
+    linkedin: "https://www.linkedin.com/in/shoghi-sheida-4a9099235",
     autre: { label: "", url: "" },
   },
 };
