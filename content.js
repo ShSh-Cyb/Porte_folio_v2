@@ -44,11 +44,15 @@ window.PORTFOLIO = {
     },
     {
       categorie: "Systèmes",
-      items: ["Linux (Debian / Ubuntu)", "Windows Server", "Active Directory", "Windows 11", "PowerShell", "Migration de parc", "Utilisateurs & droits", "Services réseau", "GLPI"],
+      items: ["Linux (Debian / Ubuntu)", "Windows Server", "Active Directory", "Windows 11", "BitLocker", "PowerShell", "Winget", "Ventoy", "ChromeOS Flex", "Utilisateurs & droits", "GLPI"],
     },
     {
       categorie: "Cybersécurité",
-      items: ["Sécurité des systèmes et réseaux", "Pare-feu", "Sauvegardes", "Bonnes pratiques mots de passe", "Menaces & vulnérabilités"],
+      items: ["OpenVPN", "Certificats", "Chiffrement BitLocker", "Sécurité des systèmes et réseaux", "Pare-feu", "Sauvegardes", "Menaces & vulnérabilités"],
+    },
+    {
+      categorie: "Support & outils",
+      items: ["Jira (ticketing)", "TeamViewer", "ManageEngine Endpoint Central", "Rédaction de procédures"],
     },
     {
       categorie: "Développement web",
@@ -251,25 +255,202 @@ window.PORTFOLIO = {
     },
     {
       id: "migration-windows-11",
-      titre: "Migration d'un parc de postes Windows 10 vers Windows 11",
+      titre: "Migration du parc de postes de Windows 10 vers Windows 11",
       contexte: "pro-1",
-      periode: "[JJ]/06/26 au [JJ]/07/26",
+      periode: "29/06/26 au 31/08/26",
       description:
-        "Stage chez Hoppen : pilotage de la migration d'un parc de postes Windows 10 vers Windows 11, avec rédaction d'une [documentation — à compléter].",
-      tags: ["Windows 11", "PowerShell", "Migration de parc"],
+        "Rédaction d'une procédure interne de migration et suivi poste par poste via une checklist Jira en onze étapes, en amont de la fin du support de Windows 10.",
+      tags: ["Windows 11", "BitLocker", "Winget", "Jira"],
       competences: [1, 4, 5],
       fiche: {
         contexte:
-          "Stage de technicien DSI chez Hoppen (Cesson-Sévigné). [Contexte : taille du parc, pourquoi migrer (fin de support de Windows 10), contraintes pour les utilisateurs.]",
-        objectifs: ["Migrer le parc de postes vers Windows 11", "Limiter l'interruption de service pour les utilisateurs", "[Autre objectif]"],
-        environnement: ["Windows 10", "Windows 11", "PowerShell", "[Outil de déploiement / inventaire]"],
-        etapes: [
-          "[Étape 1 — ex. Inventaire et vérification de la compatibilité des postes]",
-          "[Étape 2 — ex. Planification des vagues de migration]",
-          "[Étape 3 — ex. Scripts PowerShell et déploiement]",
-          "[Étape 4 — ex. Rédaction de la documentation et accompagnement des utilisateurs]",
+          "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. La fin du support de Windows 10 imposait de migrer les postes de travail. Pour que l'opération soit identique sur tout le parc, il fallait une procédure standardisée et un suivi précis de l'avancement.",
+        objectifs: [
+          "Migrer les postes vers Windows 11 sans perte de données",
+          "Standardiser l'opération avec une procédure reproductible",
+          "Suivre l'avancement poste par poste",
         ],
-        resultats: "[Nombre de postes migrés, tests réalisés, retours des utilisateurs.]",
+        environnement: ["Windows 10 / 11", "PC Health Check", "BitLocker", "Winget", "Jira"],
+        etapes: [
+          "Vérification de la compatibilité matérielle (processeur, RAM, TPM 2.0, Secure Boot)",
+          "Création d'un compte local dédié à l'installation, indépendant du compte de l'utilisateur",
+          "Sauvegarde des données utilisateur, point de restauration et contrôle de l'espace disque",
+          "Suspension puis réactivation de BitLocker, avec sauvegarde de la clé de récupération",
+          "Mise à jour de Windows et des logiciels via Winget, puis mise à niveau",
+          "Vérifications post-migration (pilotes, imprimantes, VPN, logiciels métier) et nettoyage de disque",
+          "Formalisation de la procédure en checklist Jira à onze étapes",
+        ],
+        resultats:
+          "Migrations sécurisées : aucune perte de données et chiffrement toujours actif en fin de procédure. La checklist Jira donne une vision claire de l'avancement et facilite la reprise en cas d'interruption.",
+      },
+      documents: [],
+      lien: "",
+      code: "",
+      image: "",
+      video: "",
+    },
+    {
+      id: "deploiement-ventoy",
+      titre: "Automatisation du déploiement des postes Windows 11 (PowerShell, clé Ventoy)",
+      contexte: "pro-1",
+      periode: "29/06/26 au 31/08/26",
+      description:
+        "Conception d'un script PowerShell de post-installation embarqué sur la clé Ventoy : installation des logiciels et agents, nettoyage des applications, profils « site » et « siège ».",
+      tags: ["PowerShell", "Ventoy", "Winget", "Automatisation"],
+      competences: [1, 5],
+      fiche: {
+        contexte:
+          "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. L'installation des nouveaux postes demandait de nombreuses opérations manuelles après Windows. L'objectif était de les automatiser de façon fiable et reproductible.",
+        objectifs: [
+          "Automatiser la configuration post-installation des postes",
+          "Garantir une configuration identique et conforme sur tout le parc",
+          "Pouvoir rejouer le script sur un poste déjà en service",
+        ],
+        environnement: ["PowerShell", "Ventoy", "autounattend.xml", "Winget", "Agent GLPI", "ManageEngine Endpoint Central"],
+        etapes: [
+          "Architecture en deux niveaux : un script « bootstrap » dans autounattend.xml qui localise la clé par son étiquette de volume, puis un script principal identique sur toutes les clés",
+          "Installation de Chrome, Firefox, de l'agent GLPI et de l'agent Endpoint Central via Winget ou en mode silencieux",
+          "Suppression des applications préinstallées non désirées, y compris dans le paquet provisionné pour les futurs comptes",
+          "Application d'un profil de déploiement « site » ou « siège »",
+          "Script rejouable, journalisation de chaque étape et pop-up récapitulatif en fin d'exécution",
+          "Choix, avec le maître de stage, de confier TeamViewer à Endpoint Central pour respecter la charte de l'entreprise",
+        ],
+        resultats:
+          "Déploiement automatisé et rejouable. Plusieurs problèmes diagnostiqués et corrigés : blocage silencieux de Winget en mode non surveillé, échec global dû au partage d'un même processus PowerShell (script principal isolé dans un processus séparé), indisponibilité temporaire de Winget au premier démarrage (détection avec attente bornée), curseur de volume bloqué après l'installation des pilotes.",
+      },
+      documents: [],
+      lien: "",
+      code: "",
+      image: "",
+      video: "",
+    },
+    {
+      id: "openvpn",
+      titre: "Sécurisation des accès distants avec OpenVPN",
+      contexte: "pro-1",
+      periode: "29/06/26 au 31/08/26",
+      description:
+        "Participation au déploiement d'une surcouche de mot de passe sur les certificats OpenVPN, pour mettre fin au partage de sessions VPN restées ouvertes.",
+      tags: ["OpenVPN", "Certificats", "Sécurité"],
+      competences: [1, 5],
+      fiche: {
+        contexte:
+          "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. Le mot de passe réseau, complexe, était souvent enregistré dans OpenVPN GUI : des sessions restaient ouvertes et plusieurs personnes finissaient par partager un même accès. La solution retenue : un mot de passe propre au certificat, que l'application ne peut pas mémoriser.",
+        objectifs: [
+          "Supprimer le partage d'accès VPN entre utilisateurs",
+          "Imposer une saisie à chaque connexion sans compliquer l'usage",
+          "Documenter la procédure",
+        ],
+        environnement: ["OpenVPN", "Certificats .p12", "Profils .ovpn", "PowerShell / OpenSSL"],
+        etapes: [
+          "Identification nominative des utilisateurs avec les responsables d'équipe (un certificat par personne)",
+          "Re-chiffrement des certificats réalisé par le maître de stage (droits d'accès requis)",
+          "Déploiement des certificats sur les postes et adaptation des profils .ovpn",
+          "Vérification de la connexion pour chaque utilisateur",
+          "Mise au propre de la documentation de la procédure",
+        ],
+        resultats:
+          "Accès distants sécurisés et nominatifs. Cette mission m'a montré qu'un problème de sécurité recouvre souvent un enjeu d'usage, et qu'un déploiement se prépare avec les équipes utilisatrices.",
+      },
+      documents: [],
+      lien: "",
+      code: "",
+      image: "",
+      video: "",
+    },
+    {
+      id: "diagnostic-certificat",
+      titre: "Diagnostic d'un incident de certificat bloquant plusieurs services",
+      contexte: "pro-1",
+      periode: "29/06/26 au 31/08/26",
+      description:
+        "Traitement d'un ticket : erreurs de certificat sur Jira et l'outil de gestion des temps, et perte de remontée de l'agent Endpoint Central sur les postes d'un site distant.",
+      tags: ["Diagnostic", "Certificats", "Jira", "Support"],
+      competences: [2],
+      fiche: {
+        contexte:
+          "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. Des utilisateurs d'un site distant ne pouvaient plus accéder à Jira ni à l'outil de gestion des temps : les navigateurs signalaient un certificat non valide.",
+        objectifs: [
+          "Identifier l'origine de l'incident",
+          "Rétablir l'accès aux outils en attendant une correction durable",
+        ],
+        environnement: ["Microsoft Edge", "Jira", "ManageEngine Endpoint Central"],
+        etapes: [
+          "Reproduction du problème sur un second poste",
+          "Constat d'une perte de remontée de l'agent Endpoint Central sur les deux machines",
+          "Hypothèse d'une interception réseau en amont, plutôt que d'un problème de poste",
+          "Mise en place d'un contournement isolé : profil Edge séparé, limité aux sites de confiance nécessaires",
+          "Documentation du compromis de sécurité associé",
+        ],
+        resultats:
+          "Accès rétabli sans toucher à la session habituelle de l'utilisateur, qui reste protégée normalement. Un exemple concret d'arbitrage entre continuité de service et sécurité.",
+      },
+      documents: [],
+      lien: "",
+      code: "",
+      image: "",
+      video: "",
+    },
+    {
+      id: "recuperation-acces",
+      titre: "Procédure de récupération d'accès à un poste verrouillé",
+      contexte: "pro-1",
+      periode: "29/06/26 au 31/08/26",
+      description:
+        "Recherche, test et documentation d'une méthode pour réinitialiser le mot de passe administrateur local d'un poste Windows, à l'usage de l'équipe DSI.",
+      tags: ["Windows", "WinPE", "Documentation"],
+      competences: [1, 2],
+      fiche: {
+        contexte:
+          "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. Défi proposé par le responsable IT : trouver et documenter une méthode pour retrouver l'accès à un poste dont le mot de passe administrateur local avait été perdu.",
+        objectifs: [
+          "Retrouver l'accès à un poste sans le réinstaller",
+          "Fournir une procédure fiable et réutilisable par l'équipe",
+        ],
+        environnement: ["Windows", "WinPE", "Clé USB d'installation", "BitLocker"],
+        etapes: [
+          "Recherche et test d'une méthode de récupération depuis l'environnement d'installation Windows (WinPE)",
+          "Réinitialisation du mot de passe du compte local concerné",
+          "Restauration immédiate de la configuration d'origine du poste",
+          "Rédaction de la documentation technique, avec le périmètre et les limites de la méthode",
+        ],
+        resultats:
+          "Procédure documentée et transmise à l'équipe. Limites précisées : elle ne concerne que les comptes locaux (ni compte Microsoft, ni domaine Active Directory) et nécessite la clé de récupération si BitLocker est actif.",
+      },
+      documents: [],
+      lien: "",
+      code: "",
+      image: "",
+      video: "",
+    },
+    {
+      id: "support-parc",
+      titre: "Support à distance, gestion de parc et reconditionnement",
+      contexte: "pro-1",
+      periode: "29/06/26 au 31/08/26",
+      description:
+        "Prise en main à distance, mise en conformité et enrôlement des postes, suivi des tickets Jira, inventaire GLPI et reconditionnement des postes anciens sous ChromeOS Flex.",
+      tags: ["TeamViewer", "Endpoint Central", "GLPI", "ChromeOS Flex"],
+      competences: [1, 2],
+      fiche: {
+        contexte:
+          "Stage de technicien DSI chez Hoppen (Rennes), entreprise spécialisée dans les solutions digitales pour les établissements de santé. Au quotidien, la DSI assure le support des utilisateurs internes et la gestion du parc informatique.",
+        objectifs: [
+          "Assister les utilisateurs à distance",
+          "Maintenir des postes conformes aux normes de la DSI",
+          "Donner une seconde vie aux postes non éligibles à Windows 11",
+        ],
+        environnement: ["TeamViewer", "ManageEngine Endpoint Central", "Jira", "GLPI", "ChromeOS Flex"],
+        etapes: [
+          "Prise en main à distance via TeamViewer et vérification de la conformité des postes",
+          "Enrôlement des postes dans Endpoint Central pour une gestion centralisée",
+          "Création, qualification et suivi de tickets dans Jira",
+          "Inventaire matériel et logiciel du parc dans GLPI",
+          "Démontage et diagnostic de postes (bureau, mini PC, portables)",
+          "Installation de ChromeOS Flex sur les postes trop anciens pour Windows 11",
+        ],
+        resultats:
+          "Postes reconditionnés plutôt que réformés. Point d'attention relevé : ChromeOS Flex introduit une gestion hybride du parc, avec une console d'administration distincte des outils Windows de la DSI.",
       },
       documents: [],
       lien: "",
@@ -331,10 +512,10 @@ window.PORTFOLIO = {
     },
     {
       type: "experience",
-      periode: "Juin — juil. 2026",
+      periode: "29 juin — 31 août 2026",
       titre: "Technicien DSI — stage",
-      lieu: "Hoppen — Cesson-Sévigné",
-      details: "Pilotage de la migration d'un parc de postes Windows 10 vers Windows 11, avec rédaction d'une [documentation — à compléter]. PowerShell, Windows 11.",
+      lieu: "Hoppen — Rennes",
+      details: "Migration du parc vers Windows 11, automatisation du déploiement des postes (PowerShell), sécurisation des accès VPN, support à distance et ticketing Jira, inventaire GLPI.",
     },
     {
       type: "formation",
