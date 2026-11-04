@@ -49,7 +49,7 @@
   /* ---------- Projets + filtres ---------- */
   const ref = D.referentiel || [];
   const ctxLabel = (c) =>
-    ({ formation: "Formation", "alternance-1": "Alternance — 1re année", "alternance-2": "Alternance — 2e année" })[c] || c;
+    ({ formation: "Formation", "pro-1": "Stage — 1re année", "pro-2": "Alternance — 2e année" })[c] || c;
   const projets = $("#projects");
   projets.innerHTML = D.projets
     .map((pr) => {
@@ -83,7 +83,7 @@
         ${img}
         <div class="project__body">
           <div class="project__meta">
-            ${pr.contexte ? `<span class="ctx ctx--${pr.contexte.startsWith("alternance") ? "pro" : "form"}">${esc(ctxLabel(pr.contexte))}</span>` : ""}
+            ${pr.contexte ? `<span class="ctx ctx--${pr.contexte !== "formation" ? "pro" : "form"}">${esc(ctxLabel(pr.contexte))}</span>` : ""}
             ${pr.periode ? `<span class="mono">${esc(pr.periode)}</span>` : ""}
           </div>
           <h3>${fiche ? `<a class="project__title" href="${fiche}">${esc(pr.titre)}</a>` : esc(pr.titre)}</h3>
@@ -121,11 +121,11 @@
     const head = `<thead><tr><th scope="col">Réalisation</th><th scope="col">Période</th>${ref
       .map((r, i) => `<th scope="col" title="${esc(r.nom)}"><span class="mono">C${i + 1}</span><small>${esc(r.nom)}</small></th>`)
       .join("")}</tr></thead>`;
-    const groups = ["formation", "alternance-1", "alternance-2"];
+    const groups = ["formation", "pro-1", "pro-2"];
     const titles = {
       formation: "Réalisations en cours de formation",
-      "alternance-1": "Réalisations en milieu professionnel — 1re année",
-      "alternance-2": "Réalisations en milieu professionnel — 2e année",
+      "pro-1": "Réalisations en milieu professionnel en cours de première année",
+      "pro-2": "Réalisations en milieu professionnel en cours de seconde année",
     };
     const body = groups
       .map((g) => {

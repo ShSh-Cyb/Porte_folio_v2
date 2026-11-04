@@ -12,7 +12,7 @@ window.PORTFOLIO = {
     titre: "Technicien systèmes et réseaux — BTS SIO SISR en alternance",
     titresAnimes: [
       "Technicien systèmes & réseaux",
-      "En alternance à Saint-Malo Agglomération",
+      "Administrateur systèmes et réseaux en alternance",
       "Étudiant BTS SIO option SISR",
       "Certifié Cisco",
     ],
@@ -26,8 +26,8 @@ window.PORTFOLIO = {
   },
 
   apropos: [
-    "Pendant dix ans, j'ai été régisseur son, vidéo et plateau dans le spectacle vivant et l'événementiel, notamment à l'ADAC Dôme Théâtre d'Albertville. J'y ai découvert les réseaux en configurant des systèmes audio sur IP (Dante) : c'est ce qui m'a donné envie d'en faire mon métier.",
-    "J'ai donc entrepris une reconversion : je prépare aujourd'hui un BTS SIO option SISR (Solutions d'Infrastructure, Systèmes et Réseaux) à My Digital School, en alternance au sein de Saint-Malo Agglomération. J'y développe mes compétences en administration systèmes, réseaux et cybersécurité.",
+    "Pendant dix ans, j'ai été régisseur son, vidéo et plateau dans le spectacle vivant et l'événementiel, notamment au Dôme Théâtre d'Albertville. J'y ai découvert les réseaux en configurant des systèmes audio sur IP (Dante) : c'est ce qui m'a donné envie d'en faire mon métier.",
+    "J'ai donc entrepris une reconversion : je prépare aujourd'hui un BTS SIO option SISR (Solutions d'Infrastructure, Systèmes et Réseaux) à My Digital School. Après un stage de technicien DSI chez Hoppen, je suis en alternance comme administrateur systèmes et réseaux à Saint-Malo Agglomération. J'y développe mes compétences en administration systèmes, réseaux et cybersécurité.",
     "En dehors de l'informatique : basse, didgeridoo et guimbarde, escalade (bloc) et cirque aérien.",
   ],
 
@@ -44,7 +44,7 @@ window.PORTFOLIO = {
     },
     {
       categorie: "Systèmes",
-      items: ["Linux (Debian / Ubuntu)", "Windows Server", "Active Directory", "Utilisateurs & droits", "Services réseau", "GLPI"],
+      items: ["Linux (Debian / Ubuntu)", "Windows Server", "Active Directory", "Windows 11", "PowerShell", "Migration de parc", "Utilisateurs & droits", "Services réseau", "GLPI"],
     },
     {
       categorie: "Cybersécurité",
@@ -129,7 +129,8 @@ window.PORTFOLIO = {
    * Chaque réalisation a sa propre fiche détaillée : realisation.html?id=<id>
    *
    *  id         : identifiant court, sans espace ni accent (sert aussi de nom de dossier : docs/<id>/)
-   *  contexte   : "formation", "alternance-1" (1re année) ou "alternance-2" (2e année)
+   *  contexte   : "formation", "pro-1" (milieu professionnel 1re année — stage Hoppen)
+   *               ou "pro-2" (milieu professionnel 2e année — alternance Saint-Malo Agglomération)
    *  periode    : format du tableau E5 « JJ/MM/AA au JJ/MM/AA »
    *  competences: numéros du référentiel (1 à 6) mobilisés
    *  fiche      : le contenu détaillé affiché sur la fiche
@@ -249,15 +250,43 @@ window.PORTFOLIO = {
       video: "",
     },
     {
-      id: "alternance-1",
+      id: "migration-windows-11",
+      titre: "Migration d'un parc de postes Windows 10 vers Windows 11",
+      contexte: "pro-1",
+      periode: "[JJ]/06/26 au [JJ]/07/26",
+      description:
+        "Stage chez Hoppen : pilotage de la migration d'un parc de postes Windows 10 vers Windows 11, avec rédaction d'une [documentation — à compléter].",
+      tags: ["Windows 11", "PowerShell", "Migration de parc"],
+      competences: [1, 4, 5],
+      fiche: {
+        contexte:
+          "Stage de technicien DSI chez Hoppen (Cesson-Sévigné). [Contexte : taille du parc, pourquoi migrer (fin de support de Windows 10), contraintes pour les utilisateurs.]",
+        objectifs: ["Migrer le parc de postes vers Windows 11", "Limiter l'interruption de service pour les utilisateurs", "[Autre objectif]"],
+        environnement: ["Windows 10", "Windows 11", "PowerShell", "[Outil de déploiement / inventaire]"],
+        etapes: [
+          "[Étape 1 — ex. Inventaire et vérification de la compatibilité des postes]",
+          "[Étape 2 — ex. Planification des vagues de migration]",
+          "[Étape 3 — ex. Scripts PowerShell et déploiement]",
+          "[Étape 4 — ex. Rédaction de la documentation et accompagnement des utilisateurs]",
+        ],
+        resultats: "[Nombre de postes migrés, tests réalisés, retours des utilisateurs.]",
+      },
+      documents: [],
+      lien: "",
+      code: "",
+      image: "",
+      video: "",
+    },
+    {
+      id: "saint-malo-agglo",
       titre: "[Réalisation en alternance — titre à compléter]",
-      contexte: "alternance-1",
+      contexte: "pro-2",
       periode: "[JJ/MM/AA au JJ/MM/AA]",
       description: "[Contexte à Saint-Malo Agglomération, ce que tu as fait, le résultat pour les utilisateurs.]",
       tags: ["[Techno]"],
       competences: [],
       fiche: {
-        contexte: "[Le service, le besoin exprimé, les contraintes.]",
+        contexte: "Alternance d'administrateur systèmes et réseaux à Saint-Malo Agglomération (EPCI). [Le service, le besoin exprimé, les contraintes.]",
         objectifs: ["[Objectif]"],
         environnement: ["[Outil / système]"],
         etapes: ["[Étape 1]", "[Étape 2]"],
@@ -295,10 +324,17 @@ window.PORTFOLIO = {
   parcours: [
     {
       type: "experience",
-      periode: "[Début] — aujourd'hui",
-      titre: "Alternance — Technicien systèmes et réseaux",
-      lieu: "Saint-Malo Agglomération",
+      periode: "Sept. 2026 — aujourd'hui",
+      titre: "Administrateur systèmes et réseaux — alternance",
+      lieu: "Saint-Malo Agglomération (EPCI) — Saint-Malo",
       details: "[Tes missions principales en alternance.]",
+    },
+    {
+      type: "experience",
+      periode: "Juin — juil. 2026",
+      titre: "Technicien DSI — stage",
+      lieu: "Hoppen — Cesson-Sévigné",
+      details: "Pilotage de la migration d'un parc de postes Windows 10 vers Windows 11, avec rédaction d'une [documentation — à compléter]. PowerShell, Windows 11.",
     },
     {
       type: "formation",
@@ -309,10 +345,24 @@ window.PORTFOLIO = {
     },
     {
       type: "experience",
-      periode: "2020 — 2025",
-      titre: "Régisseur son et vidéo",
-      lieu: "ADAC Dôme Théâtre — Albertville (73)",
+      periode: "Août 2020 — juil. 2025",
+      titre: "Régisseur son et vidéo (CDI)",
+      lieu: "Le Dôme Théâtre — Albertville (73)",
       details: "Régie son et vidéo des spectacles, configuration de réseaux audio Dante.",
+    },
+    {
+      type: "experience",
+      periode: "Sept. 2019 — juil. 2020",
+      titre: "Technicien son (intermittent du spectacle)",
+      lieu: "Association Au bout du plongeoir — Thorigné-Fouillard (35)",
+      details: "",
+    },
+    {
+      type: "experience",
+      periode: "Oct. — déc. 2019",
+      titre: "Régisseur son (intermittent du spectacle)",
+      lieu: "Spectaculaires, Allumeurs d'images — Saint-Thurial (35)",
+      details: "",
     },
     {
       type: "experience",

@@ -13,7 +13,7 @@
   };
   const chips = (list) => `<ul class="chips">${list.map((t) => `<li class="chip">${esc(t)}</li>`).join("")}</ul>`;
   const ctxLabel = (c) =>
-    ({ formation: "Réalisation en cours de formation", "alternance-1": "Alternance — 1re année", "alternance-2": "Alternance — 2e année" })[c] || c;
+    ({ formation: "Réalisation en cours de formation", "pro-1": "Stage — 1re année", "pro-2": "Alternance — 2e année" })[c] || c;
 
   const nomComplet = `${D.profil.prenom} ${D.profil.nom}`.trim();
   $("#footerTxt").textContent = `© ${new Date().getFullYear()} ${nomComplet}`;
@@ -88,7 +88,7 @@
   box.innerHTML = `
     <header class="fiche__head">
       <div class="project__meta">
-        ${pr.contexte ? `<span class="ctx ctx--${pr.contexte.startsWith("alternance") ? "pro" : "form"}">${esc(ctxLabel(pr.contexte))}</span>` : ""}
+        ${pr.contexte ? `<span class="ctx ctx--${pr.contexte !== "formation" ? "pro" : "form"}">${esc(ctxLabel(pr.contexte))}</span>` : ""}
         ${pr.periode ? `<span class="mono">${esc(pr.periode)}</span>` : ""}
       </div>
       <h1>${esc(pr.titre)}</h1>
