@@ -230,20 +230,42 @@ window.PORTFOLIO = {
     },
     {
       id: "wordpress",
-      titre: "Site WordPress : développement local et migration",
+      titre: "Migration d'un site WordPress de WAMP vers PlanetHoster",
       contexte: "formation",
-      periode: "[JJ/MM/AA au JJ/MM/AA]",
-      description: "Création d'un site WordPress dans un environnement local, puis migration vers un serveur d'hébergement.",
-      tags: ["WordPress", "Web"],
+      periode: "[JJ]/11/25 au [JJ]/11/25",
+      description:
+        "En binôme avec Lara Bernstein : migration d'un site WordPress développé en local sous WAMP vers un hébergement en ligne chez PlanetHoster (base de données, fichiers, configuration et URL).",
+      tags: ["WordPress", "WAMP", "PlanetHoster", "MySQL"],
       competences: [3, 5],
       fiche: {
-        contexte: "[Contexte.]",
-        objectifs: ["[Objectif]"],
-        environnement: ["WordPress", "[Environnement local — ex. XAMPP / Local]", "[Hébergeur]"],
-        etapes: ["[Étape 1]", "[Étape 2]", "[Étape 3]"],
-        resultats: "[Résultats.]",
+        contexte:
+          "Projet de formation réalisé en binôme avec Lara Bernstein. Un site WordPress développé en local sous WAMP devait être mis en ligne chez l'hébergeur PlanetHoster, sans perte de contenu ni de configuration.",
+        objectifs: [
+          "Mettre en ligne un site développé en local",
+          "Transférer la base de données et les fichiers WordPress",
+          "Adapter la configuration et l'URL du site à son nouvel hébergement",
+          "Présenter la démarche sous forme de procédure",
+        ],
+        environnement: ["WordPress", "WAMP", "phpMyAdmin", "MySQL", "PlanetHoster (N0C)", "Gestionnaire de fichiers"],
+        etapes: [
+          "Export de la base de données locale depuis phpMyAdmin (fichier .sql)",
+          "Compression du dossier WordPress du répertoire www de WAMP en archive .zip",
+          "Création d'une base MySQL et d'un utilisateur avec tous les privilèges sur PlanetHoster",
+          "Import du fichier .sql dans le phpMyAdmin de PlanetHoster",
+          "Envoi et extraction de l'archive dans public_html",
+          "Modification de wp-config.php (nom de la base, utilisateur, mot de passe)",
+          "Mise à jour de l'URL du site dans la table options par une requête SQL",
+        ],
+        resultats:
+          "Site en ligne et fonctionnel. Difficultés rencontrées et résolues : un préfixe de table différent de celui attendu (erreur SQL, préfixe à identifier avant la requête), une archive .rar impossible à extraire sur l'hébergeur (recréée en .zip), et l'importance de respecter l'ordre des étapes : les fichiers WordPress ne fonctionnent pas sans leur base de données ni sans un wp-config.php à jour.",
       },
-      documents: [],
+      documents: [
+        {
+          label: "Présentation : migration WordPress-WAMP vers PlanetHoster",
+          url: "docs/wordpress/presentation-migration-wordpress-planethoster.pdf",
+          description: "Support de présentation en 13 diapositives, réalisé avec Lara Bernstein",
+        },
+      ],
       lien: "",
       code: "",
       image: "",

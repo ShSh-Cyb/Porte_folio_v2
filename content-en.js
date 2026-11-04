@@ -144,16 +144,35 @@ window.PORTFOLIO_EN = {
     },
     {
       id: "wordpress",
-      titre: "WordPress website: local development and migration",
-      periode: "[DD/MM/YY to DD/MM/YY]",
-      description: "Built a WordPress website in a local environment, then migrated it to a hosting server.",
+      titre: "Migrating a WordPress site from WAMP to PlanetHoster",
+      periode: "[DD]/11/25 to [DD]/11/25",
+      description:
+        "With Lara Bernstein: migrated a WordPress site developed locally on WAMP to online hosting at PlanetHoster (database, files, configuration and URL).",
       fiche: {
-        contexte: "[Context.]",
-        objectifs: ["[Objective]"],
-        environnement: ["WordPress", "[Local environment — e.g. XAMPP / Local]", "[Hosting provider]"],
-        etapes: ["[Step 1]", "[Step 2]", "[Step 3]"],
-        resultats: "[Results.]",
+        contexte:
+          "Coursework project carried out in pairs with Lara Bernstein. A WordPress site developed locally on WAMP had to be put online with the hosting provider PlanetHoster, with no loss of content or configuration.",
+        objectifs: [
+          "Put a locally developed site online",
+          "Transfer the database and the WordPress files",
+          "Adapt the site's configuration and URL to its new hosting",
+          "Present the process as a step-by-step procedure",
+        ],
+        environnement: ["WordPress", "WAMP", "phpMyAdmin", "MySQL", "PlanetHoster (N0C)", "File manager"],
+        etapes: [
+          "Exporting the local database from phpMyAdmin (.sql file)",
+          "Compressing the WordPress folder from WAMP's www directory into a .zip archive",
+          "Creating a MySQL database and a user with all privileges on PlanetHoster",
+          "Importing the .sql file into PlanetHoster's phpMyAdmin",
+          "Uploading and extracting the archive into public_html",
+          "Editing wp-config.php (database name, user, password)",
+          "Updating the site URL in the options table with an SQL query",
+        ],
+        resultats:
+          "Site online and working. Issues met and solved: a table prefix different from the expected one (SQL error, the prefix must be identified before running the query), a .rar archive that could not be extracted on the host (recreated as .zip), and the importance of following the steps in order: WordPress files do not work without their database and an up-to-date wp-config.php.",
       },
+      documents: [
+        { url: "docs/wordpress/presentation-migration-wordpress-planethoster.pdf", label: "Presentation: migrating WordPress from WAMP to PlanetHoster (in French)", description: "13-slide presentation, made with Lara Bernstein" },
+      ],
     },
     {
       id: "portfolio",
