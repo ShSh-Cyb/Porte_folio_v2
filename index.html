@@ -29,7 +29,8 @@
       <nav class="nav__links" id="navLinks" aria-label="Navigation principale">
         <a href="#apropos">À propos</a>
         <a href="#competences">Compétences</a>
-        <a href="#projets">Projets</a>
+        <a href="#projets">Réalisations</a>
+        <a href="#veille">Veille</a>
         <a href="#parcours">Parcours</a>
         <a href="#contact">Contact</a>
         <button class="theme-btn" id="themeBtn" aria-label="Changer de thème" title="Changer de thème">
@@ -51,7 +52,7 @@
         <p class="hero__titre"><span class="sr-only" id="heroTitre"></span><span aria-hidden="true" id="typed"></span><span class="caret" aria-hidden="true"></span></p>
         <p class="hero__accroche" id="heroAccroche"></p>
         <div class="hero__cta">
-          <a class="btn btn--primary" href="#projets">Voir mes projets</a>
+          <a class="btn btn--primary" href="#projets">Voir mes réalisations</a>
           <a class="btn" id="heroCv" href="#" download hidden>Télécharger mon CV</a>
           <a class="btn btn--ghost" href="#contact">Me contacter</a>
         </div>
@@ -77,13 +78,31 @@
     </section>
 
     <section id="projets" class="section container reveal">
-      <h2 class="section__title"><span class="mono">03.</span> Projets</h2>
-      <div class="filters" id="filters" role="group" aria-label="Filtrer les projets"></div>
+      <h2 class="section__title"><span class="mono">03.</span> Réalisations professionnelles</h2>
+      <div class="filters" id="filters" role="group" aria-label="Filtrer les réalisations"></div>
       <div class="projects" id="projects"></div>
+
+      <div id="syntheseWrap">
+        <h3 class="sub-title">Tableau de synthèse — épreuve E5</h3>
+        <p class="sub-lead">Compétences du référentiel BTS SIO mobilisées par chaque réalisation.</p>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau de synthèse">
+          <table class="synthese" id="synthese"></table>
+        </div>
+      </div>
+
+      <div id="docsE5Wrap">
+        <h3 class="sub-title">Documents de l'épreuve</h3>
+        <ul class="docs-e5" id="docsE5"></ul>
+      </div>
+    </section>
+
+    <section id="veille" class="section container reveal">
+      <h2 class="section__title"><span class="mono">04.</span> Veille technologique</h2>
+      <div class="veille" id="veilleBox"></div>
     </section>
 
     <section id="parcours" class="section container reveal">
-      <h2 class="section__title"><span class="mono">04.</span> Parcours</h2>
+      <h2 class="section__title"><span class="mono">05.</span> Parcours</h2>
       <ol class="timeline" id="timeline"></ol>
       <div id="certsWrap">
         <h3 class="sub-title">Certifications</h3>
@@ -92,7 +111,7 @@
     </section>
 
     <section id="contact" class="section container reveal">
-      <h2 class="section__title"><span class="mono">05.</span> Contact</h2>
+      <h2 class="section__title"><span class="mono">06.</span> Contact</h2>
       <div class="contact">
         <p class="contact__lead">Une opportunité, une question ou simplement envie d'échanger ? Écris-moi, je réponds rapidement.</p>
         <div class="contact__email">
@@ -118,6 +137,7 @@
   </footer>
 
   <script src="content.js"></script>
+  <script src="common.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

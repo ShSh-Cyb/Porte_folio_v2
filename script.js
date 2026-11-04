@@ -6,7 +6,7 @@
   // Échappe le texte injecté (évite les problèmes avec <, &, etc.)
   const esc = (s) =>
     String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-  const safeUrl = (u) => (/^(https?:|mailto:|\.?\/|assets\/|[\w-]+\.(pdf|png|jpe?g|webp|svg|gif|mp4|webm)$)/i.test(u || "") ? u : "");
+  const safeUrl = (u) => (/^(https?:|mailto:|\.?\/|assets\/|docs\/|[\w-]+\.(pdf|png|jpe?g|webp|svg|gif|mp4|webm)$)/i.test(u || "") ? u : "");
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
   const youtubeId = (u) => {
@@ -47,9 +47,13 @@
     .join("");
 
   /* ---------- Projets + filtres ---------- */
+  const ref = D.referentiel || [];
+  const ctxLabel = (c) =>
+    ({ formation: "Formation", "alternance-1": "Alternance — 1re année", "alternance-2": "Alternance — 2e année" })[c] || c;
   const projets = $("#projects");
   projets.innerHTML = D.projets
     .map((pr) => {
+      const fiche = pr.id ? `realisation.html?id=${encodeURIComponent(pr.id)}` : "";
       const yt = youtubeId(pr.video);
       const vid = !yt && safeUrl(pr.video);
       const poster = safeUrl(pr.image) || (yt ? `https://i.ytimg.com/vi/${yt}/hqdefault.jpg` : "");
@@ -67,26 +71,37 @@
       }
       const img = `<div class="project__media">${media}</div>`;
       const links = [
+        fiche && `<a href="${fiche}">Voir la fiche →</a>`,
         safeUrl(pr.lien) && `<a href="${esc(pr.lien)}" target="_blank" rel="noopener">Voir la démo ↗</a>`,
         safeUrl(pr.code) && `<a href="${esc(pr.code)}" target="_blank" rel="noopener">Code source ↗</a>`,
       ].filter(Boolean).join("");
-      return `<article class="project" data-tags="${esc(pr.tags.join("|"))}">
+      const comps = (pr.competences || [])
+        .map((n) => `<li title="${esc((ref[n - 1] || {}).nom || "")}">C${n}</li>`)
+        .join("");
+      const nDocs = (pr.documents || []).filter((d) => safeUrl(d.url)).length;
+      return `<article class="project" data-ctx="${esc(pr.contexte || "")}">
         ${img}
         <div class="project__body">
-          <h3>${esc(pr.titre)}</h3>
+          <div class="project__meta">
+            ${pr.contexte ? `<span class="ctx ctx--${pr.contexte.startsWith("alternance") ? "pro" : "form"}">${esc(ctxLabel(pr.contexte))}</span>` : ""}
+            ${pr.periode ? `<span class="mono">${esc(pr.periode)}</span>` : ""}
+          </div>
+          <h3>${fiche ? `<a class="project__title" href="${fiche}">${esc(pr.titre)}</a>` : esc(pr.titre)}</h3>
           <p>${esc(pr.description)}</p>
           ${chips(pr.tags)}
+          ${comps ? `<ul class="comps" aria-label="Compétences du référentiel">${comps}</ul>` : ""}
+          ${nDocs ? `<p class="docs-count">📎 ${nDocs} document${nDocs > 1 ? "s" : ""} joint${nDocs > 1 ? "s" : ""}</p>` : ""}
           ${links ? `<div class="project__links">${links}</div>` : ""}
         </div>
       </article>`;
     })
     .join("");
 
-  const allTags = [...new Set(D.projets.flatMap((pr) => pr.tags))];
+  const ctxs = [...new Set(D.projets.map((pr) => pr.contexte).filter(Boolean))];
   const filters = $("#filters");
-  if (allTags.length > 1 && D.projets.length > 3) {
-    filters.innerHTML = ["Tous", ...allTags]
-      .map((t, i) => `<button class="filter" type="button" aria-pressed="${i === 0}" data-tag="${i === 0 ? "" : esc(t)}">${esc(t)}</button>`)
+  if (ctxs.length > 1) {
+    filters.innerHTML = [["", "Toutes"], ...ctxs.map((c) => [c, ctxLabel(c)])]
+      .map(([v, l], i) => `<button class="filter" type="button" aria-pressed="${i === 0}" data-tag="${esc(v)}">${esc(l)}</button>`)
       .join("");
     filters.addEventListener("click", (e) => {
       const btn = e.target.closest(".filter");
@@ -94,11 +109,68 @@
       filters.querySelectorAll(".filter").forEach((b) => b.setAttribute("aria-pressed", b === btn));
       const tag = btn.dataset.tag;
       projets.querySelectorAll(".project").forEach((card) => {
-        card.hidden = tag && !card.dataset.tags.split("|").includes(tag);
+        card.hidden = tag && card.dataset.ctx !== tag;
       });
     });
   } else {
     filters.hidden = true;
+  }
+
+  /* ---------- Tableau de synthèse E5 ---------- */
+  if (ref.length && D.projets.length) {
+    const head = `<thead><tr><th scope="col">Réalisation</th><th scope="col">Période</th>${ref
+      .map((r, i) => `<th scope="col" title="${esc(r.nom)}"><span class="mono">C${i + 1}</span><small>${esc(r.nom)}</small></th>`)
+      .join("")}</tr></thead>`;
+    const groups = ["formation", "alternance-1", "alternance-2"];
+    const titles = {
+      formation: "Réalisations en cours de formation",
+      "alternance-1": "Réalisations en milieu professionnel — 1re année",
+      "alternance-2": "Réalisations en milieu professionnel — 2e année",
+    };
+    const body = groups
+      .map((g) => {
+        const rows = D.projets.filter((pr) => (pr.contexte || "formation") === g);
+        if (!rows.length) return "";
+        return `<tr class="grp"><th colspan="${ref.length + 2}" scope="rowgroup">${titles[g]}</th></tr>${rows
+          .map(
+            (pr) => `<tr><th scope="row">${pr.id ? `<a href="realisation.html?id=${encodeURIComponent(pr.id)}">${esc(pr.titre)}</a>` : esc(pr.titre)}</th><td class="mono">${esc(pr.periode || "")}</td>${ref
+              .map((r, i) => ((pr.competences || []).includes(i + 1) ? `<td class="yes"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td>` : "<td></td>"))
+              .join("")}</tr>`
+          )
+          .join("")}`;
+      })
+      .join("");
+    $("#synthese").innerHTML = head + `<tbody>${body}</tbody>`;
+  } else {
+    $("#syntheseWrap").hidden = true;
+  }
+
+  /* ---------- Veille technologique ---------- */
+  const vl = D.veille;
+  if (vl && vl.sujet) {
+    const arts = (vl.articles || [])
+      .map(
+        (a) => `<li class="article">
+          ${safeUrl(a.url) ? `<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.titre)} ↗</a>` : `<strong>${esc(a.titre)}</strong>`}
+          <span class="mono">${esc([a.source, a.date].filter(Boolean).join(" · "))}</span>
+        </li>`
+      )
+      .join("");
+    $("#veilleBox").innerHTML = `
+      <div class="veille__intro">
+        <p class="eyebrow mono">Sujet de veille</p>
+        <h3>${esc(vl.sujet)}</h3>
+        <p>${esc(vl.description)}</p>
+      </div>
+      <div class="veille__side">
+        <h4>Outils et sources</h4>
+        ${chips(vl.outils || [])}
+      </div>
+      ${arts ? `<div class="veille__articles"><h4>Articles récents</h4><ul>${arts}</ul></div>` : ""}`;
+  } else {
+    $("#veille").hidden = true;
+    const a = document.querySelector('.nav__links a[href="#veille"]');
+    if (a) a.hidden = true;
   }
 
   /* ---------- Parcours ---------- */
@@ -108,7 +180,7 @@
         <div class="tl-meta"><span class="tl-badge">${it.type === "formation" ? "Formation" : "Expérience"}</span><span>${esc(it.periode)}</span></div>
         <h3>${esc(it.titre)}</h3>
         <p class="tl-lieu">${esc(it.lieu)}</p>
-        <p>${esc(it.details)}</p>
+        ${it.details ? `<p>${esc(it.details)}</p>` : ""}
       </li>`
     )
     .join("");
@@ -117,11 +189,21 @@
     $("#certs").innerHTML = D.certifications
       .map((c) => {
         const nom = safeUrl(c.lien) ? `<a href="${esc(c.lien)}" target="_blank" rel="noopener">${esc(c.nom)}</a>` : esc(c.nom);
-        return `<li class="cert"><strong>${nom}</strong><span>${esc(c.organisme)} · ${esc(c.annee)}</span></li>`;
+        return `<li class="cert"><strong>${nom}</strong><span>${esc([c.organisme, c.annee].filter(Boolean).join(" · "))}</span></li>`;
       })
       .join("");
   } else {
     $("#certsWrap").hidden = true;
+  }
+
+  /* ---------- Documents de l'épreuve ---------- */
+  const docsE5 = (D.documentsE5 || []).filter((d) => safeUrl(d.url));
+  if (docsE5.length) {
+    $("#docsE5").innerHTML = docsE5
+      .map((d) => `<li><a class="btn btn--ghost" href="${esc(d.url)}" target="_blank" rel="noopener">📄 ${esc(d.label)}</a></li>`)
+      .join("");
+  } else {
+    $("#docsE5Wrap").hidden = true;
   }
 
   /* ---------- Contact ---------- */
@@ -352,31 +434,7 @@
     });
   }
 
-  /* ---------- Thème clair / sombre ---------- */
-  const root = document.documentElement;
-  $("#themeBtn").addEventListener("click", () => {
-    const current = root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    const next = current === "dark" ? "light" : "dark";
-    root.dataset.theme = next;
-    try { localStorage.setItem("theme", next); } catch (e) {}
-  });
-
-  /* ---------- Menu mobile ---------- */
-  const toggle = $("#navToggle");
   const links = $("#navLinks");
-  const setMenu = (open) => {
-    links.classList.toggle("open", open);
-    toggle.setAttribute("aria-expanded", open);
-    toggle.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
-  };
-  toggle.addEventListener("click", () => setMenu(!links.classList.contains("open")));
-  links.addEventListener("click", (e) => e.target.tagName === "A" && setMenu(false));
-  document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
-
-  /* ---------- Nav : ombre au scroll + lien actif ---------- */
-  const nav = $(".nav");
-  addEventListener("scroll", () => nav.classList.toggle("scrolled", scrollY > 8), { passive: true });
-
   const navLinks = [...links.querySelectorAll("a")];
   const spy = new IntersectionObserver(
     (entries) =>

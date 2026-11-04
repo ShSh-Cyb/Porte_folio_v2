@@ -2,10 +2,33 @@
 
 Portfolio personnel statique (HTML / CSS / JavaScript, sans dépendance ni build).
 
+Portfolio de **Shoghi Sheida** — BTS SIO option SISR (My Digital School, Rennes),
+en alternance à Saint-Malo Agglomération. Il sert de support à l'**épreuve E5**.
+
+## Structure
+
+| Fichier | Rôle |
+|---------|------|
+| `content.js` | **Tout le contenu** (le seul fichier à modifier) |
+| `index.html` / `script.js` | Page d'accueil |
+| `realisation.html` / `realisation.js` | Fiche détaillée d'une réalisation (`realisation.html?id=glpi`) |
+| `common.js`, `style.css` | Code et styles partagés |
+| `docs/<id>/` | Documents et productions de chaque réalisation — voir [`docs/README.md`](docs/README.md) |
+| `assets/` | Photo, CV, images |
+
+## Ce que contient le site (attendus E5)
+
+- Parcours de professionnalisation (formations + expériences)
+- Réalisations professionnelles, en formation et en alternance, chacune avec sa fiche :
+  contexte, objectifs, environnement technique, mise en œuvre, résultats, compétences, documents
+- Tableau de synthèse généré automatiquement (cohérent avec les réalisations)
+- Veille technologique
+- Liens vers les documents de l'épreuve (tableau de synthèse, attestation, CV)
+
 ## Modifier le contenu
 
-Tout le texte est dans **`content.js`** : profil, à propos, compétences, projets,
-parcours, certifications et contact. Remplace les valeurs entre `[ ]`.
+Tout le texte est dans **`content.js`** : profil, à propos, compétences, réalisations,
+veille, parcours, certifications et contact. Les valeurs entre `[ ]` restent à compléter.
 
 - Photo, CV et captures de projets → dépose-les dans `assets/` puis indique leur chemin
   (ex. `"assets/CV.pdf"`).
