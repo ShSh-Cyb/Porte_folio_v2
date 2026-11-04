@@ -3,6 +3,7 @@
   "use strict";
   const D = window.PORTFOLIO;
   const $ = (s) => document.querySelector(s);
+  const T = window.T || ((s) => s);
   const esc = (s) =>
     String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const safeUrl = (u) => (/^(https?:|\.?\/|assets\/|docs\/|[\w-]+\.html(\?|#|$))/i.test(u || "") ? u : "");
@@ -13,7 +14,7 @@
   };
   const chips = (list) => `<ul class="chips">${list.map((t) => `<li class="chip">${esc(t)}</li>`).join("")}</ul>`;
   const ctxLabel = (c) =>
-    ({ formation: "Réalisation en cours de formation", "pro-1": "Stage — 1re année", "pro-2": "Alternance — 2e année" })[c] || c;
+    ({ formation: T("Réalisation en cours de formation", "Coursework project"), "pro-1": T("Stage — 1re année", "Internship — 1st year"), "pro-2": T("Alternance — 2e année", "Work-study — 2nd year") })[c] || c;
 
   const nomComplet = `${D.profil.prenom} ${D.profil.nom}`.trim();
   $("#footerTxt").textContent = `© ${new Date().getFullYear()} ${nomComplet}`;
@@ -24,8 +25,9 @@
   const box = $("#fiche");
 
   if (idx === -1) {
-    document.title = `Réalisation introuvable — ${nomComplet}`;
+    document.title = `${T("Réalisation introuvable")} — ${nomComplet}`;
     box.innerHTML = `<div class="fiche__empty"><h1>Réalisation introuvable</h1><p>Cette fiche n'existe pas ou a été renommée.</p><a class="btn btn--primary" href="index.html#projets">Voir toutes les réalisations</a></div>`;
+    if (window.translateDOM) window.translateDOM(box);
     return;
   }
 
@@ -38,11 +40,11 @@
   const yt = youtubeId(pr.video);
   let media = "";
   if (yt) {
-    media = `<div class="fiche__media"><iframe src="https://www.youtube-nocookie.com/embed/${yt}?rel=0" title="Vidéo : ${esc(pr.titre)}" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>`;
+    media = `<div class="fiche__media"><iframe src="https://www.youtube-nocookie.com/embed/${yt}?rel=0" title="${T("Vidéo :", "Video:")} ${esc(pr.titre)}" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>`;
   } else if (safeUrl(pr.video)) {
     media = `<div class="fiche__media"><video src="${esc(pr.video)}" ${safeUrl(pr.image) ? `poster="${esc(pr.image)}"` : ""} controls playsinline preload="metadata"></video></div>`;
   } else if (safeUrl(pr.image)) {
-    media = `<div class="fiche__media"><img src="${esc(pr.image)}" alt="Aperçu de ${esc(pr.titre)}" /></div>`;
+    media = `<div class="fiche__media"><img src="${esc(pr.image)}" alt="${T("Aperçu de", "Preview of")} ${esc(pr.titre)}" /></div>`;
   }
 
   /* ---------- Sections ---------- */
@@ -119,6 +121,7 @@
       <a href="realisation.html?id=${encodeURIComponent(prev.id)}"><small>← Précédente</small>${esc(prev.titre)}</a>
       <a href="realisation.html?id=${encodeURIComponent(next.id)}"><small>Suivante →</small>${esc(next.titre)}</a>
     </nav>`;
+  if (window.translateDOM) window.translateDOM(box);
 
   /* ---------- Aperçu des documents ---------- */
   const modal = $("#docModal");

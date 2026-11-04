@@ -2,6 +2,7 @@
   "use strict";
   const D = window.PORTFOLIO;
   const $ = (s) => document.querySelector(s);
+  const T = window.T || ((s) => s);
 
   // Échappe le texte injecté (évite les problèmes avec <, &, etc.)
   const esc = (s) =>
@@ -31,7 +32,7 @@
   const avStyle = document.documentElement.dataset.avatar;
   const avSrc = ["illustration", "pochoir", "crayon"].includes(avStyle) ? `assets/avatar-${avStyle}.png` : p.photo;
   if (avSrc) {
-    avatar.innerHTML = `<img src="${esc(avSrc)}" alt="${avSrc === p.photo ? "Photo" : "Portrait dessiné"} de ${esc(nomComplet)}" />`;
+    avatar.innerHTML = `<img src="${esc(avSrc)}" alt="${T(avSrc === p.photo ? "Photo de" : "Portrait dessiné de", avSrc === p.photo ? "Photo of" : "Illustrated portrait of")} ${esc(nomComplet)}" />`;
   } else {
     const ini = (p.prenom.replace(/\W/g, "")[0] || "") + (p.nom.replace(/\W/g, "")[0] || "");
     avatar.textContent = ini.toUpperCase() || "</>";
@@ -51,7 +52,7 @@
   /* ---------- Projets + filtres ---------- */
   const ref = D.referentiel || [];
   const ctxLabel = (c) =>
-    ({ formation: "Formation", "pro-1": "Stage — 1re année", "pro-2": "Alternance — 2e année" })[c] || c;
+    ({ formation: T("Formation", "Coursework"), "pro-1": T("Stage — 1re année", "Internship — 1st year"), "pro-2": T("Alternance — 2e année", "Work-study — 2nd year") })[c] || c;
   const projets = $("#projects");
   projets.innerHTML = D.projets
     .map((pr) => {
@@ -59,15 +60,15 @@
       const yt = youtubeId(pr.video);
       const vid = !yt && safeUrl(pr.video);
       const poster = safeUrl(pr.image) || (yt ? `https://i.ytimg.com/vi/${yt}/hqdefault.jpg` : "");
-      const play = `<button class="play-btn" type="button" data-video="${esc(pr.video)}" aria-label="Lire la vidéo : ${esc(pr.titre)}">${playIcon}</button>`;
+      const play = `<button class="play-btn" type="button" data-video="${esc(pr.video)}" aria-label="${T("Lire la vidéo :", "Play video:")} ${esc(pr.titre)}">${playIcon}</button>`;
       let media;
       if (vid) {
         media = `<video src="${esc(pr.video)}" ${poster ? `poster="${esc(poster)}"` : ""} muted loop playsinline preload="metadata" aria-hidden="true"></video>
           <span class="media-badge">▶ vidéo</span>${play}`;
       } else if (yt) {
-        media = `<img src="${esc(poster)}" alt="Aperçu de ${esc(pr.titre)}" loading="lazy" onerror="this.remove()" /><span class="media-badge">YouTube</span>${play}`;
+        media = `<img src="${esc(poster)}" alt="${T("Aperçu de", "Preview of")} ${esc(pr.titre)}" loading="lazy" onerror="this.remove()" /><span class="media-badge">YouTube</span>${play}`;
       } else if (poster) {
-        media = `<img src="${esc(poster)}" alt="Aperçu de ${esc(pr.titre)}" loading="lazy" />`;
+        media = `<img src="${esc(poster)}" alt="${T("Aperçu de", "Preview of")} ${esc(pr.titre)}" loading="lazy" />`;
       } else {
         media = `<div class="project__placeholder"><span>${esc(pr.tags[0] || "projet")}</span></div>`;
       }
@@ -92,7 +93,7 @@
           <p>${esc(pr.description)}</p>
           ${chips(pr.tags)}
           ${comps ? `<ul class="comps" aria-label="Compétences du référentiel">${comps}</ul>` : ""}
-          ${nDocs ? `<p class="docs-count">📎 ${nDocs} document${nDocs > 1 ? "s" : ""} joint${nDocs > 1 ? "s" : ""}</p>` : ""}
+          ${nDocs ? `<p class="docs-count">📎 ${nDocs} ${T(nDocs > 1 ? "documents joints" : "document joint", nDocs > 1 ? "attached documents" : "attached document")}</p>` : ""}
           ${links ? `<div class="project__links">${links}</div>` : ""}
         </div>
       </article>`;
@@ -215,7 +216,7 @@
   $("#copyEmail").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(ct.email);
-      $("#copied").textContent = "Adresse copiée ✓";
+      $("#copied").textContent = T("Adresse copiée ✓");
     } catch (e) {
       $("#copied").textContent = ct.email;
     }
@@ -581,4 +582,6 @@
     { threshold: 0.1 }
   );
   document.querySelectorAll(".reveal").forEach((el) => reveal.observe(el));
+  /* ---------- Traduction des textes générés ---------- */
+  if (window.translateDOM) window.translateDOM(document.body);
 })();
