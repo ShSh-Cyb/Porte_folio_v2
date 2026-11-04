@@ -12,6 +12,18 @@ parcours, certifications et contact. Remplace les valeurs entre `[ ]`.
 - Pour masquer une section optionnelle (ex. certifications), mets une liste vide `[]`.
 - Les filtres de projets apparaissent automatiquement à partir de 4 projets.
 
+## Vidéos et animations
+
+- **Vidéo de démo d'un projet** : dans `content.js`, renseigne `video` sur le projet :
+  - un fichier `"assets/demo.mp4"` → aperçu muet au survol (ou au défilement sur mobile),
+    et lecteur plein écran au clic ;
+  - ou un lien YouTube (`https://youtu.be/...`) → miniature automatique + lecteur intégré.
+  Conseil : MP4 (H.264) de 10 à 30 s, 720p, moins de 10 Mo. `image` sert d'affiche.
+- **Fond de l'accueil** : animation de particules interactive (suit la souris, un clic crée
+  une onde). Pour la remplacer par une vidéo, renseigne `profil.videoFond`.
+- **Titre animé** : liste `profil.titresAnimes`, affichée en « machine à écrire ».
+- Toutes les animations sont coupées si l'utilisateur a activé « réduire les animations ».
+
 ## Voir le site en local
 
 ```bash

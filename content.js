@@ -16,6 +16,13 @@ window.PORTFOLIO = {
     disponibilite: "[ex. Disponible pour une alternance — sept. 2027]",
     photo: "", // ex. "assets/photo.jpg" (laisser vide pour afficher les initiales)
     cv: "", // ex. "assets/CV.pdf" (laisser vide pour masquer le bouton)
+
+    // Titres qui défilent en « machine à écrire » sous ton nom (laisser [] pour afficher « titre »)
+    titresAnimes: ["[Titre 1 — ex. Étudiant en cybersécurité]", "[Titre 2 — ex. Passionné de CTF]", "[Titre 3 — ex. Développeur Python]"],
+
+    // Vidéo de fond de l'accueil (optionnel). Ex. "assets/fond.mp4" — muette, en boucle.
+    // Laisser vide pour garder l'animation interactive de particules.
+    videoFond: "",
   },
 
   apropos: [
@@ -45,6 +52,9 @@ window.PORTFOLIO = {
       lien: "", // démo en ligne
       code: "", // lien GitHub
       image: "", // ex. "assets/projet1.png"
+      // Vidéo de démo : fichier "assets/demo1.mp4" (aperçu au survol) OU lien YouTube.
+      // Un clic ouvre le lecteur en plein écran.
+      video: "",
     },
     {
       titre: "[Nom du projet 2]",
@@ -53,6 +63,7 @@ window.PORTFOLIO = {
       lien: "",
       code: "",
       image: "",
+      video: "",
     },
     {
       titre: "[Nom du projet 3]",
@@ -61,6 +72,7 @@ window.PORTFOLIO = {
       lien: "",
       code: "",
       image: "",
+      video: "",
     },
   ],
 

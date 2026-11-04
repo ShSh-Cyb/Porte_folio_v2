@@ -41,11 +41,14 @@
   </header>
 
   <main id="main">
+    <div class="hero-wrap">
+    <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+    <video class="hero__video" id="heroVideo" muted loop playsinline autoplay hidden aria-hidden="true"></video>
     <section class="hero container">
       <div class="hero__text">
         <p class="eyebrow mono" id="heroDispo"></p>
         <h1 id="heroNom"></h1>
-        <p class="hero__titre" id="heroTitre"></p>
+        <p class="hero__titre"><span class="sr-only" id="heroTitre"></span><span aria-hidden="true" id="typed"></span><span class="caret" aria-hidden="true"></span></p>
         <p class="hero__accroche" id="heroAccroche"></p>
         <div class="hero__cta">
           <a class="btn btn--primary" href="#projets">Voir mes projets</a>
@@ -57,6 +60,8 @@
         <div class="avatar" id="avatar"></div>
       </div>
     </section>
+    <p class="hero__hint mono" id="heroHint" aria-hidden="true">↖ bouge la souris · clique pour une onde</p>
+    </div>
 
     <section id="apropos" class="section container reveal">
       <h2 class="section__title"><span class="mono">01.</span> À propos</h2>
@@ -99,6 +104,11 @@
       </div>
     </section>
   </main>
+
+  <dialog class="modal" id="videoModal" aria-label="Lecteur vidéo">
+    <button class="modal__close" id="modalClose" type="button" aria-label="Fermer la vidéo">✕</button>
+    <div class="modal__body" id="modalBody"></div>
+  </dialog>
 
   <footer class="footer">
     <div class="container footer__inner">
