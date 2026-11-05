@@ -77,8 +77,8 @@
     "Toutes les réalisations": "All projects",
     "E6": "E6",
     "Épreuve E6": "E6 exam",
-    "Administration des systèmes et des réseaux (option SISR) : compétences du bloc 2 mobilisées par mes réalisations.":
-      "Systems and network administration (SISR option): block 2 skills used in my projects.",
+    "Administration des systèmes et des réseaux (option SISR) : les deux réalisations présentées à l'épreuve.":
+      "Systems and network administration (SISR option): the two projects presented at the exam.",
     "Tableau de couverture des compétences": "Skills coverage table",
     "Tableau de couverture E6": "E6 coverage table",
     "Réalisations présentées à l'épreuve": "Projects presented at the exam",

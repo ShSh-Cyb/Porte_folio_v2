@@ -148,60 +148,23 @@
     $("#syntheseWrap").hidden = true;
   }
 
-  /* ---------- Épreuve E6 (bloc 2 SISR) ---------- */
-  const refE6 = D.referentielE6 || [];
+  /* ---------- Épreuve E6 : les deux réalisations présentées ---------- */
   const e6 = D.epreuveE6 || {};
-  if (refE6.length) {
-    // Numérotation continue des sous-compétences (1 à 17)
-    let n = 0;
-    const subs = refE6.map((c) => ({ nom: c.nom, items: c.details.map((d) => ({ num: ++n, txt: d })) }));
-    const cols = D.projets.filter((pr) => (pr.competencesE6 || []).length);
-    const ficheUrl = (pr) => `realisation.html?id=${encodeURIComponent(pr.id)}`;
-    const headE6 = `<thead><tr><th scope="col">${esc(T("Compétence", "Skill"))}</th>${cols
-      .map((pr) => `<th scope="col" title="${esc(pr.titre)}"><a href="${ficheUrl(pr)}">${esc(pr.court || pr.titre)}</a></th>`)
-      .join("")}</tr></thead>`;
-    const bodyE6 = subs
-      .map(
-        (c, ci) => `<tr class="grp"><th colspan="${cols.length + 1}" scope="rowgroup">${ci + 1}. ${esc(c.nom)}</th></tr>${c.items
-          .map(
-            (it) => `<tr><th scope="row"><span class="num">${it.num}</span> ${esc(it.txt)}</th>${cols
-              .map((pr) => (pr.competencesE6.includes(it.num) ? `<td class="yes"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td>` : "<td></td>"))
-              .join("")}</tr>`
-          )
-          .join("")}`
-      )
-      .join("");
-    const covered = new Set(cols.flatMap((pr) => pr.competencesE6));
-    const footE6 = `<tfoot><tr><th scope="row">${esc(T("Compétences couvertes", "Skills covered"))} : ${covered.size} / ${n}</th>${cols
-      .map((pr) => `<td>${pr.competencesE6.length}</td>`)
-      .join("")}</tr></tfoot>`;
-    $("#syntheseE6").innerHTML = headE6 + `<tbody>${bodyE6}</tbody>` + footE6;
-
+  {
     const picks = (e6.realisations || []).map((id) => D.projets.find((pr) => pr.id === id)).filter(Boolean);
     $("#e6Selection").innerHTML = picks.length
       ? `<div class="e6-selection">${picks
           .map(
             (pr, i) => `<article class="e6-pick">
               <p class="project__meta"><span class="ctx ctx--pro">${esc(T("Réalisation", "Project"))} ${i + 1}</span>${pr.periode ? `<span class="mono">${esc(pr.periode)}</span>` : ""}</p>
-              <h4><a class="project__title" href="${ficheUrl(pr)}">${esc(pr.titre)}</a></h4>
+              <h4><a class="project__title" href="realisation.html?id=${encodeURIComponent(pr.id)}">${esc(pr.titre)}</a></h4>
               <p class="muted">${esc(pr.description)}</p>
-              <ul class="comps">${(pr.competencesE6 || []).map((k) => `<li title="${esc((subs.flatMap((c) => c.items).find((x) => x.num === k) || {}).txt || "")}">${k}</li>`).join("")}</ul>
+              ${chips(pr.tags || [])}
+              <p class="project__links"><a href="realisation.html?id=${encodeURIComponent(pr.id)}">${esc(T("Voir la fiche →"))}</a></p>
             </article>`
           )
           .join("")}</div>`
       : `<p class="e6-empty">${esc(T("Les deux réalisations présentées à l'épreuve sont en cours de sélection.", "The two projects presented at the exam are being selected."))}</p>`;
-
-    $("#e6Env").innerHTML = chips(e6.environnement || []);
-    const docsE6 = (e6.documents || []).filter((d) => safeUrl(d.url));
-    if (docsE6.length) {
-      $("#e6Docs").innerHTML = docsE6.map((d) => `<li><a class="btn btn--ghost" href="${esc(d.url)}" target="_blank" rel="noopener">📄 ${esc(d.label)}</a></li>`).join("");
-    } else {
-      $("#e6Docs").innerHTML = `<li class="muted">${esc(T("Fiches descriptives et dossier professionnel à venir.", "Description sheets and professional file coming soon."))}</li>`;
-    }
-  } else {
-    $("#e6").hidden = true;
-    const a = document.querySelector('.nav__links a[href="#e6"]');
-    if (a) a.hidden = true;
   }
 
   /* ---------- Veille technologique ---------- */
@@ -268,13 +231,26 @@
 
   /* ---------- Contact ---------- */
   const ct = D.contact;
-  $("#emailLink").href = `mailto:${ct.email}`;
+  const emailLink = $("#emailLink");
+  const emailAddr = () => (Array.isArray(ct.email) ? ct.email.join("@") : String(ct.email || ""));
+  emailLink.href = "#contact";
+  emailLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    const url = "mailto:" + emailAddr();
+    if (window.top !== window.self) {
+      // Dans un cadre (aperçu intégré), un lien mailto direct affiche une page blanche
+      const w = window.open(url, "_blank", "noopener");
+      if (!w) $("#copied").textContent = T("Utilise « Copier l'adresse » pour m'écrire.", "Use “Copy address” to write to me.");
+    } else {
+      location.href = url;
+    }
+  });
   $("#copyEmail").addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText(ct.email);
+      await navigator.clipboard.writeText(emailAddr());
       $("#copied").textContent = T("Adresse copiée ✓");
     } catch (e) {
-      $("#copied").textContent = ct.email;
+      $("#copied").textContent = T("Copie impossible sur ce navigateur.", "Copying is not possible in this browser.");
     }
     setTimeout(() => ($("#copied").textContent = ""), 2500);
   });

@@ -190,22 +190,6 @@ window.PORTFOLIO = {
   epreuveE6: {
     // Les deux réalisations présentées à l'épreuve (leurs « id »), ex. ["lan-vlan", "deploiement-ventoy"]
     realisations: [],
-    // Environnement technologique utilisé (annexe II.E du référentiel)
-    environnement: [
-      "[Hyperviseur — ex. Proxmox, VMware Workstation, VirtualBox]",
-      "Windows Server / Active Directory",
-      "Linux (Debian / Ubuntu)",
-      "Cisco Packet Tracer",
-      "[Pare-feu — ex. pfSense]",
-      "[Supervision — ex. Zabbix, Nagios]",
-    ],
-    // Documents de l'épreuve (affichés seulement s'ils ont une url)
-    documents: [
-      { label: "Fiche descriptive — réalisation 1", url: "" },
-      { label: "Fiche descriptive — réalisation 2", url: "" },
-      { label: "Page de garde du dossier professionnel", url: "" },
-      { label: "Environnement technologique (annexe II.E)", url: "" },
-    ],
   },
 
   /*
@@ -740,7 +724,9 @@ window.PORTFOLIO = {
   ],
 
   contact: {
-    email: "shoghijean@gmail.com",
+    // Adresse découpée [avant @, après @] pour ne pas être lisible par les robots qui parcourent le web.
+    // Elle n'apparaît jamais sur la page : le lien mailto n'est construit qu'au clic.
+    email: ["shoghijean", "gmail.com"],
     github: "https://github.com/ShSh-Cyb",
     linkedin: "https://www.linkedin.com/in/shoghi-sheida-4a9099235",
     autre: { label: "", url: "" },

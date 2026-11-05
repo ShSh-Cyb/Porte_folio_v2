@@ -136,23 +136,6 @@ window.PORTFOLIO_EN = {
     },
   ],
 
-  epreuveE6: {
-    environnement: [
-      "[Hypervisor — e.g. Proxmox, VMware Workstation, VirtualBox]",
-      "Windows Server / Active Directory",
-      "Linux (Debian / Ubuntu)",
-      "Cisco Packet Tracer",
-      "[Firewall — e.g. pfSense]",
-      "[Monitoring — e.g. Zabbix, Nagios]",
-    ],
-    documents: [
-      { label: "Project description sheet — project 1" },
-      { label: "Project description sheet — project 2" },
-      { label: "Professional file cover page" },
-      { label: "Technology environment (appendix II.E)" },
-    ],
-  },
-
   projets: [
     {
       id: "glpi",
